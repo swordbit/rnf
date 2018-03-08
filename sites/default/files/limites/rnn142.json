@@ -1,0 +1,8 @@
+{"type": "FeatureCollection","features": [{ "type": "Feature", "properties": { "name": "Réserve Naturelle", "cmt": null, "desc": null, "src": null, "link1_href": null, "link1_text": null, "link1_type": null, "link2_href": null, "link2_text": null, "link2_type": null, "number": null, "type": null }, "geometry": { "type": "MultiLineString", "coordinates": [ 
+[ 
+[ -61.0963626, 16.1808358 ], [ -61.1075561, 16.1640375 ], [ -61.1332537, 16.1555901 ], [ -61.1405084, 16.1776451 ], [ -61.1007687, 16.1893688 ], [ -61.0963626, 16.1808358 ]
+]
+ ] } }
+
+]
+}
