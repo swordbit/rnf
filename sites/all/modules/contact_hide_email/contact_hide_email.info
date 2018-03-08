@@ -1,0 +1,13 @@
+name = "Contact Hide Email"
+description = "Prevents the recipient's email address from being shown in the \"From\" in contact form auto-replies."
+
+dependencies[] = contact
+
+core = 7.x
+
+; Information added by drupal.org packaging script on 2013-09-30
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "contact_hide_email"
+datestamp = "1380566820"
+

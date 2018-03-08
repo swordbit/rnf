@@ -1,0 +1,90 @@
+<?php
+// $Id: advcontact.module,v 1.6 2009/07/22 02:41:29 neclimdul Exp $
+/**
+ * @file
+ * This module provides basic additions to the core drupal contact module.
+ *
+ * Features:
+ *   Provide basic default values to contact form.
+ */
+
+/**
+ * Implementation of hook_help().
+ */
+function advcontact_help($path, $arg) {
+  if ($path == 'admin/help#advcontact') {
+    return t('This module provides extra functionality to the the default drupal contact module.<br/>' .
+        'With it you can:' .
+        '<ul><li>Pass "category" as a GET arguement to set the category of the contact.  This coresponds directly to the text of the category.</li>' .
+        '<li>Pass "subject" as a GET arguement to set the subject of the contact form.</li></ul>' .
+        'An example would be:<br />' .
+        "<code>l('Provide feedback about our new frontpage', 'contact', NULL, 'category=Website feedback&subject=New frontpage feedback')</code>");
+  }
+}
+
+/**
+ * Implementation of hook_form_alter().
+ *
+ * This is where we modify the contact form to provide our new functionality.
+ */
+function advcontact_form_alter(&$form, &$form_state, $form_id) {
+
+  // Add some options to the contact settings form. Its a basic Drupal setting
+  // form so it will take care of storing these values for us.
+  if ($form_id == 'contact_admin_settings') {
+    $form['advcontact'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Advanced Contact Options'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#weight' => -1,
+    );
+    $form['advcontact']['advcontact_category_information'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Advanced Contact additional information'),
+      '#description' => t('Provide additional information when a category is selected. You can use @category in you message and it will be replaced by the provided category.'),
+      '#default_value' => variable_get('advcontact_category_information', t('You can leave us a message using the contact form below regarding: @category')),
+    );
+    $form['advcontact']['advcontact_replace_information'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Replace Contact information'),
+      '#description' => t('If selected, the additional information provided will be used to replace the default contact information provided by the contact module. Otherwise it will be appended.'),
+      '#default_value' => variable_get('advcontact_replace_information', TRUE),
+    );
+  }
+
+  if ($form_id == 'contact_site_form') {
+    if (!empty($_GET['category'])) {
+      $cat = $_GET['category'];
+      $cid = array_search($cat, $form['cid']['#options']);
+      if ($cid) {
+        $form['cid'] = array(
+          '#type' => 'hidden',
+          '#value' => $cid,
+          '#required' => TRUE,
+        );
+        $msg = filter_xss_admin(variable_get('advcontact_category_information', t('You can leave us a message using the contact form below regarding: @category')));
+        // We have to replace it manually for those users that overide the default value.
+        $msg = str_replace('@category', check_plain($cat), $msg);
+        if (variable_get('advcontact_replace_information', TRUE)) {
+          $form['contact_information']['#value'] = $msg;
+        }
+        else {
+          $form['contact_information']['extra'] = array(
+            '#type' => 'markup',
+            '#prefix' => ' ', // A space because it'll usually need it.
+            '#value' => $msg,
+           );
+        }
+      }
+    }
+
+    if (!empty($_GET['subject'])) {
+      $form['subject']['#default_value'] = check_plain($_GET['subject']);
+    }
+
+    if (!empty($_GET['message'])) {
+      $form['message']['#default_value'] = check_plain($_GET['message']);
+    }
+  }
+}

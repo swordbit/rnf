@@ -1,0 +1,771 @@
+/**
+ * @file
+ * Block Styling
+ */
+
+
+.block /* Block wrapper */ {
+  margin-bottom: 1.5em;
+}
+
+.block.first /* The first block in the region */ {
+}
+
+.block.last /* The last block in the region */ {
+}
+
+.block.odd /* Zebra striping for each block in the region */ {
+}
+
+.block.even /* Zebra striping for each block in the region */ {
+}
+
+h2.block-title /* Block title */ {
+ display: none;
+}
+
+.block .content /* Block's content wrapper */ {
+}
+
+#block-aggregator-category-1 /* Block for the latest news items in the first category */ {
+}
+
+#block-aggregator-feed-1 /* Block for the latest news items in the first feed */ {
+}
+
+#block-block-1 /* First block created with "Add block" link */ {
+  position: relative;
+  display: block;
+/*  float: left; */
+  width: 200px; height: 77px;
+}
+
+#block-block-1 p { margin: 0; }
+
+#block-blog-recent /* "Recent blog posts" block */ {
+}
+
+#block-book-navigation /* "Book navigation" block for the current book's table of contents */ {
+}
+
+#block-comment-recent /* "Recent comments" block */ {
+}
+
+#block-forum-active /* "Active forum topics" block */ {
+}
+
+#block-forum-new /* "New forum topics" block */ {
+}
+
+#block-locale-language /* Language switcher block */ {
+}
+
+#block-menu-menu-NAME /* Custom menu block  */ {
+}
+
+#block-node-recent /* "Recent content" block */ {
+}
+
+#block-node-syndicate /* "Syndicate" block for primary RSS feed; see also page.css's .feed-icon */ {
+}
+
+#block-poll-recent /* "Most recent poll" block */ {
+}
+
+#block-profile-author-information /* "Author information" block for the profile of the page's author */ {
+}
+
+#block-search-form /* "Search form" block */ {
+}
+
+#block-shortcut-shortcuts /* "Shortcuts" block */ {
+}
+
+#block-statistics-popular /* "Popular content" block */ {
+}
+
+#block-system-main-menu /* "Main menu" block */ {
+       height: 40px;
+       margin: 0; padding: 0;
+}
+
+#block-system-main-menu ul { list-style: none; margin-top : -2px; }
+
+#block-system-main-menu li { display: inline; margin: 0 8px; }
+
+#block-system-management /* "Management" block for Drupal management menu */ {
+}
+
+#block-system-navigation /* "Navigation" block for Drupal navigation menu */ {
+}
+
+#block-system-user-menu /* "User menu" block for Drupal user menu */ {
+       float: right; 
+       height: 20px;
+       margin: 0; padding: 0;
+}
+
+#block-system-user-menu ul { list-style: none; margin-top : -2px; }
+
+#block-system-user-menu li { display: inline; margin: 0 8px; }
+
+
+#block-system-help /* "System help" block */ {
+}
+
+#block-system-main /* "Main page content" block */ {
+}
+
+#block-system-powered-by /* "Powered by Drupal" block */ {
+}
+
+#block-user-login /* "User login form" block */ { /* float: right; */
+/* font-size: 70%; */
+}
+
+#block-user-new /* "Who's new" block for a list of the newest users */ {
+}
+
+#block-user-online /* "Who's online" block for a list of the online users */ {
+}
+
+/* 
+#zooms { margin-top: 3px;
+         margin-left: 3px; }
+
+#zooms a { text-decoration: none; }
+*/
+
+#top-menu { position: relative;
+            display: block;
+            clear: none;
+            width: 723px; /* 143 * 5 + 8 */
+            height: 28px;
+            vertical-align: top; 
+            margin: 0; padding: 0 200px;
+            margin-left: auto; margin-right: auto;
+            margin-top: 5px; 
+            /* border: 1px solid blue; */
+ }
+
+#block-nice-menus-1 { position: relative;
+                      display: inline-block;
+}
+
+#block-nice-menus-1 .content {  width: 575px; height: 28px;
+} 
+
+
+/* ----------- Ajouts megamenu ----------- */
+
+#block-megamenu-navigation { width: 575px; /* 143 * 4 + 3 */
+                             font-size: 80%; 
+                             display: inline;
+                             /* border: 1px solid green; */
+}
+
+/* le premier niveau de UL */
+ul.megamenu-menu {
+                   float: none;
+                   left: auto; top: auto;
+                   list-style: none; 
+                   padding: 0; margin: 0;   
+                   /* width: 575px; */
+                   /* height: 28px; */
+                   text-align: left;
+                   position: relative;
+}
+
+.megamenu-menu .megamenu-parent { /* position: static; */ }
+
+li.megamenu-parent {
+                      display: inline;  
+                      float: left; /* LTR */ /* indispensable pour avoir des listes */
+                      width: 143px; /* height: 28px; */
+                      padding: 0; margin: 0;
+}
+
+/* titres (LES RESERVES, RNF, etc.) */
+
+ul.megamenu-menu h2.megamenu-parent-title a { 
+                 display: block; float: left;        
+                 width: 143px; line-height: 25px; 
+                 background: url(../images/bouton.png) no-repeat top center;
+                 color: #333; border: none;
+                 font-weight: bold;
+                 padding: 0; margin: 0;
+                 text-decoration: none; text-align:center; 
+}
+
+ul.megamenu-menu h2.megamenu-parent-title a:hover { 
+                 background: url(../images/bouton2.png) no-repeat top center;
+}
+
+/* la zone large qui est en dessous... */
+.megamenu-menu .megamenu-bin { 
+                  list-style:none;
+                  margin-left: -1px; padding: 0;
+                  border: none;
+                  margin-top : 28px;            
+                  -moz-border-radius:1em;
+                  webkit-border-radius:1em;
+                  border-radius:1em;
+                  /* border: 1px solid black; */
+}
+
+/* les LI de second niveau : localisation, patrimoine, etc. */
+
+.megamenu-slot-title { text-align: left; }
+
+.megamenu-skin-minimal .megamenu-slot-title, 
+.megamenu-skin-minimal .megamenu-slot-title a { 
+                 display: block;
+                 background: #eee; 
+                 color: #333;
+                 font-size: 105%;
+                 font-weight: bold;
+                 text-transform: lowercase; 
+                 text-decoration: none; 
+                 text-align: left;
+                 padding-left: 4px;
+}
+
+.megamenu-skin-minimal .megamenu-slot-title a:hover { 
+                 background: white;
+                 color: #aaa;
+                 text-decoration: none; 
+ }
+
+.megamenu-menu .megamenu-slot {
+                 margin: 0; padding: 0;
+                 width: 143px; 
+                 line-height : 25px;
+                 text-align : left;
+                 /* border: 1px solid red; */
+}
+
+/* Cas du menu actualites */
+#megamenu-mlid-573 h2.megamenu-parent-title a { color: #f18e00; } /* orange */
+
+/* Ne pas afficher la page intermediaire */
+/*
+#megamenu-mlid-573 .megamenu-slot-title, 
+#megamenu-mlid-573 .megamenu-slot-title a { 
+                   display: none;
+}
+*/
+
+li.megamenu-item a { display: block; 
+                     font-size: 110%;
+                     background: #eee; 
+                     color: #333; 
+                     text-decoration: none;
+                     padding-left: 7px;
+                     letter-spacing: -0.05em;
+                     word-spacing: 0.1em;
+}
+
+li.megamenu-item a:hover { background: white;
+                           color: #aaa; 
+                           text-decoration: none; 
+}
+
+/* div#block-megamenu-navigation.block.block-megamenu.first.odd > div.content.hyphenate > ul#megamenu-navigation.megamenu-menu.columnar.megamenu-skin-minimal > li#megamenu-mlid-573.megamenu-parent.megamenu-parent-2.odd.half-2.leaf-2.menu-573.hovering > ul.megamenu-bin.megamenu-slots-columnar > li#megamenu-mlid-6869.megamenu-slot.megamenu-slot-1.even.half-2.leaf-1.last.last > ul.megamenu-items > li#megamenu-mlid-6221.megamenu-item.megamenu-item-2.odd.half-1.leaf-2 > a */
+
+/* test horus */
+/* #megamenu-mlid-6221 a { color: #ccc; } */
+
+#megamenu-mlid-1769 a { color: #ccc; }
+
+
+/* Fin ajout megamenu */
+
+
+/* le menu en bas de page 
+   attention sur prod, le nom a 3 fois le mot menu
+   alors que sur horus, le nom a 2 fois
+*/
+
+#block-menu-menu-menu-bas-de-page,
+#block-menu-menu-bas-de-page { margin-left: 165px; 
+			        margin-bottom: 10px;
+}
+
+
+#block-menu-menu-menu-bas-de-page ul,
+#block-menu-menu-bas-de-page ul { list-style: none;
+                                  padding: 0;
+                                  margin: 0; 
+                                  width: 723px; 
+                                  height: 30px;
+                                  /* border: 1px solid red; */
+                                  margin-left: auto; margin-right: auto; 
+                                  text-align: center;
+}
+
+#block-menu-menu-menu-bas-de-page li,
+#block-menu-menu-bas-de-page li { display: inline; font-size: 71%; 
+                                  float: left; 
+                                  width: 143px; height: 28px;
+                                  text-align: center;
+}
+
+#block-menu-menu-menu-bas-de-page li a,
+#block-menu-menu-bas-de-page li a { display: block; float: left;        
+                                    width: 143px; line-height: 25px; 
+                                    background: url(../images/bouton.png) no-repeat top center;
+                                    color: #333; border: none;
+                                    font-weight: bold;
+                                    text-decoration: none; text-align:center; 
+}
+
+#block-menu-menu-menu-bas-de-page li a:hover,
+#block-menu-menu-bas-de-page li a:hover { 
+                                          background: url(../images/bouton2.png) no-repeat top center;
+}
+
+#block-menu-menu-menu-mentions {
+    display: inline; font-size: 71%; 
+    margin-top: -20px;
+    padding: 0;
+    /* border: 1px solid red; */
+    float: right;
+}
+
+#block-menu-menu-menu-mentions ul { list-style: none; }
+
+#block-menu-menu-menu-mentions li { display: inline; font-size: 80%; }
+
+#block-menu-menu-menu-mentions li a { color: #333; border: none; font-weight: bold; }
+
+
+
+/* mise en forme du bloc recherche */
+
+#block-search-form {
+                     display: inline-block;
+                     vertical-align: top;
+                     z-index: 10;
+                     background: url(../images/bouton.png) no-repeat top center;
+}
+
+#block-search-form .content {
+                     font-size: 80%;
+                     vertical-align: bottom;
+                     height: 28px; width: 143px;   
+}
+
+#block-search-form .form-text { 
+                                font-size: 90%;
+                                vertical-align: top;
+                                margin-top: 2px;
+                                margin-left: 10px; 
+                                border: none;
+                                width: 90px; height: 15px; }
+
+/* la carte de situation des reserves */
+#block-block-2 { width: 180px; 
+                 float: left; 
+                 font-size: 80%;  
+                 margin: 0; padding: 0;
+                 /* padding-left: 10px;  */
+                 /* border: 1px solid red; */
+}
+
+/* la fiche des reserves */
+#block-rnf-blocksrn-rnf-fiche-rn,
+#block-block-3 { width: 170px; 
+                 margin: 0; padding: 0;
+                 float: left; 
+                 padding-left: 10px; 
+                 font-size: 80%; 
+                 line-height: 120%; 
+                 letter-spacing: 0;
+                /* border: 1px solid red; */
+}
+
+
+/* la fiche de region */
+#block-block-6, #block-block-7 { width: 170px; 
+                 margin: 0; padding: 0;
+                 float: left; 
+                 padding-left: 10px; 
+                 font-size: 80%; 
+                 line-height: 90%; 
+                 letter-spacing: 0;
+}
+
+.maincolumn { float: left; 
+              width: 420px; 
+              clear: none;
+              padding-right: 14px;
+              margin-right: 14px; 
+              border-right: 1px solid black; 
+}
+
+
+/* mise en page des reserves */
+
+.node-reserve .field-name-body,
+.node-reserve .field-name-field-carte,
+.node-reserve .field-name-field-videos
+{ 
+              width: 420px; 
+              clear: none;
+              padding-right: 14px;
+              margin-right: 14px; 
+              border-right: 1px solid black;
+              padding-bottom: 3px;
+}
+
+#block-block-17 { border: 1px solid red; 
+		  width: 420px; 
+		  clear: both;
+}
+
+.node-reserve .field-name-field-code,
+.node-reserve .field-name-field-departement,
+.node-reserve .field-name-field-communes,
+.node-reserve .field-name-field-conservateur,
+.node-reserve .field-name-field-og1,
+.node-reserve .field-name-field-og2,
+.node-reserve .field-name-field-og3,
+.node-reserve .field-name-field-inpn,
+.node-reserve .field-name-field-code-wdpa
+{ 
+          display: none; 
+}
+
+/* mise en page des region */
+.node-region .field-name-field-videos
+{  
+  padding-top: 10px;
+  clear: none;
+}
+
+
+#block-block-13 { margin: 0; }
+
+#block-rnf-blocksrn-rnf-facebook { float: right; clear: none; margin-top: -30px; margin-left: 130px; width: 25px; margin-bottom : 5px; }
+
+/* #block-rnf-blocksrn-rnf-actua-rn { float: right; clear: none; margin-bottom : 5px; } */
+#block-rnf-blocksrn-rnf-actua-rn { float: right; clear: right; width: 270px; margin-bottom : 5px; }
+#block-rnf-blocksrn-rnf-correction { float: right; clear: right; width: 270px; margin-bottom : 5px; }
+
+#block-block-13,
+.node-reserve .field-name-field-actualites,
+.node-reserve .field-name-field-photos,
+.node-reserve .field-name-field-information,
+.node-reserve .field-name-field-fichier-rn { 
+              float: right;
+              clear: right;
+              width: 270px;
+}
+
+#block-rnf-blocksrn-rnf-facebook .content { height: 25px; }
+
+/* essai de separer les 2 colonnes */
+
+.node-type-page-privee .field-name-body,
+.node-type-page .field-name-body { 
+              float: left; 
+              width: 420px; 
+              clear: none;
+              padding-right: 14px;
+              margin-right: 14px; 
+              border-right: 1px solid black;
+ }
+
+.field-name-field-marge-droite { 
+               position: relative;
+               margin-left: 430px;
+               width: 270px; 
+               clear: none;
+ }
+
+/* fin essai */
+
+.rightcolumn { 
+               position: relative;
+               margin-left: 430px;
+               width: 270px; 
+               clear: none;
+}
+
+.exergue { font-style: italic; 
+           text-transform : uppercase; 
+           text-align: left;
+           font-size: 120%;
+           font-weight: normal;
+           line-height: 150%;
+           margin-bottom: 5px;
+}
+
+#block-user-login { 
+                    margin: 0; padding: 0; 
+                    /* margin-top: -20px; */
+                    float: right; clear: none; 
+}
+
+.views-row { margin: 10px 0; }
+
+.views-field-title { font-size: 110%; }
+.views-field-field-regionrn     { display: inline; }
+.views-field-field-lieu-poste   { display: inline; }
+.views-field-field-departement  { display: inline; }
+.date-display-single { display: inline; padding-left: 8px;  } 
+.views-field-field-type-offre   { display: inline; }
+.views-field-field-type-contrat { display: inline; }
+
+
+/* les legendes qui apparaissent sous les images */
+
+figure {  
+   display: block; 
+   position: relative; 
+   float: left; 
+   overflow: hidden; 
+   margin: 0 0;
+}  
+
+figcaption {  
+   position: absolute; 
+   width: 100%;
+   font-size: 70%;
+   font-style: italic;
+   letter-spacing: 0;
+   background: black; 
+   color: white; 
+   padding: 0 8px;
+   margin: 0;
+   margin-bottom: 4px;
+   opacity: 0; 
+   -webkit-transition: all 0.8s ease; 
+   -moz-transition: all 0.8s ease; 
+   -o-transition: all 0.8s ease;
+} 
+
+figure:hover figcaption {  
+  opacity: 1;
+}  
+
+figure figcaption { left: 0; bottom: -5%;}  
+figure:hover figcaption { bottom: 0; }
+
+/* pour la page de l'equipe salariee */
+
+table figure { float: none; }
+table figcaption {  
+   width: 100%;
+   font-size: 90%;
+   font-style: normal;
+   letter-spacing: 0;
+   position: relative;
+   background: white;
+   color: black;
+   padding: 0 5px;
+   margin: 0;
+   opacity: 1;
+} 
+
+.readmore { color: #00a; cursor: pointer; margin-bottom: 5px; }
+
+.leftmargin { 
+              text-align: right;
+              margin-top: 308px;
+              margin-right: 0;
+              width: 188px;
+}
+
+.leftmargin figure { text-align: right; }
+
+.leftmargin figcaption { 
+   float: right;
+   font-size: 60%;
+   position: static;
+   color: black;
+   background: white;
+   font-style: italic;
+   text-align: right;
+   margin: 0; 
+   padding: 0;
+   opacity: 1;
+   margin-right: 12px;
+   line-height: 160%;
+}
+
+.floatL {  float: left; margin-right: 5px; margin-top: 3px; }
+
+.floatR {  float: right; margin-left: 5px; margin-top: 3px; }
+
+/* contenu actualites */
+
+.node-actualites .field-name-field-accroche,
+.node-actualites .field-name-body,
+.node-actualites .field-name-field-date-mel { 
+              float: left;
+              width: 420px; 
+              clear: none;
+              padding-right: 14px;
+              margin-right: 14px; 
+              border-right: 1px solid black; 
+}
+
+.field-name-field-accroche { margin-top: 8px; font-style: italic; font-size: 110%; }
+
+.node-actualites .field-name-field-image { 
+              float: right;
+              width: 270px;
+              margin-top: 5px; 
+              margin-bottom: 5px;
+}
+
+.view-liste-actualites { margin: 0; padding: 0; }
+
+.view-liste-actualites .views-row { clear: both; margin: 30px 0; }
+
+.views-row .date-display-single { 
+              float: right;
+              margin-top: 0;
+              margin-left: 10px;
+              padding: 0; 
+              vertical-align: top; 
+              font-size: 80%; 
+}
+
+.views-field-field-date-mel { vertical-align: top; }
+
+/* affichage des images en general */
+figure.field-item {  width: 269px; margin-right: 2px; }
+
+
+/* contenu librairie */
+
+.node-librairie .field-name-field-image  {    
+              float: right;
+              width: 270px;
+              margin-top: 5px; 
+              margin-bottom: 5px;
+ }
+
+.node-librairie .field-name-field-date-edition,
+.node-librairie .field-name-field-type-lecteur, 
+.node-librairie .field-name-field-type-support,
+.node-librairie .field-name-field-editeur,
+.node-librairie .field-name-field-auteurs,
+.node-librairie .field-name-field-carac,
+.node-librairie .field-name-field-cout,
+.node-librairie .field-name-field-thematique
+ { 
+              float: left;
+              width: 420px; 
+              clear: none;
+              padding-right: 14px;
+              margin-right: 14px; 
+              border-right: 1px solid black; 
+}
+
+.node-librairie .field-name-field-resume { 
+  clear: both;
+  display: block;                                        
+  margin: 10px 0; 
+  font-style: italic; 
+}
+
+.node-librairie .field-name-body { clear: both; }
+
+.view-liste-librairie { margin: 0; padding: 0; }
+
+.view-liste-librairie .views-row { clear: both; margin: 30px 0; }
+
+.view-liste-librairie .floatL {  margin-right: 15px; }
+
+.views-field-field-type-lecteur { font-style: italic; }
+
+/* pages outils EED */
+.node-outil .field-name-field-fichier-outil,
+.node-outil .field-name-field-photos {
+              float: right;
+	      clear: right;
+              width: 270px;
+ }
+
+.node-outil .field-name-field-retour-outil,
+.node-outil .field-name-body,
+.node-outil .field-name-field-type-outil,
+.node-outil .field-name-field-approche,
+.node-outil .field-name-field-public,
+.node-outil .field-name-field-reserve,
+.node-outil .field-name-field-temoignage,
+.node-outil .field-name-field-contact-outil { 
+              float: left;
+	      clear: none;
+              width: 420px; 
+              padding-right: 14px;
+              margin-right: 14px; 
+              border-right: 1px solid black; 
+}
+.field-name-field-temoignage { padding-top: 10px; }
+
+.field-name-field-temoignage .field-items { 
+    background-color: #e1dbbb;
+    padding: 10px;
+    font-style: italic;
+}
+
+/* menu membres */
+
+#block-menu-menu-espace-membre ul { list-style: none;
+                                    padding-left: 10px;
+                                    padding-top: 0;
+                                    width: 180px; }
+
+#block-menu-menu-espace-membre li { list-style: none; 
+                                    font-size: 90%; 
+                                    margin: 8px 0;
+                                    text-transform: uppercase; }
+
+/* pages privees */
+
+.node-type-page-privee .views-field-title:before { 
+     content: ">"; font-weight: bold; margin-right: 6px; 
+}
+
+/* derniers billets blog */
+
+#block-views-liste-billets-block-1 { margin-left: 5px; padding: 10px;
+                                     width: 180px; font-size: 9pt; }
+
+.node-type-billet img { margin-left: 0; border: none; padding: 3px 6px 3px 6px; }
+
+.view-liste-billets .node-billet  {  width: 420px; }
+
+.node-type-billet .field-name-body {  width: 420px; }
+
+/* taille du iframe pour les PDF integres */
+iframe.pdf { margin-left: -200px; width: 920px; height: 960px; }
+
+/* pour les pages privees, la largeur est plus reduite */
+.node-type-page-privee iframe.pdf { margin-left: 0; width: 720px; height: 960px; }
+
+
+.node-type-forum .field-name-body { 
+              float: left;
+              width: 420px; 
+              clear: none;
+              padding-right: 14px;
+              margin-right: 14px; 
+              border-right: 1px solid black; 
+}
+
+.node-type-forum  .comment-wrapper { clear: none; }
+.node-type-forum  .comment { clear: none; /* margin-left: 435px;*/
+                             /* border: 1px solid red; */
+                             margin-bottom: 10px; }
+
+/* on cache le message d'avertissement */
+/* .node-type-forum ul.action-links {  display: none; } */
+
+.node-type-recrutement .field-name-field-description
+{ margin-top: 20px; }
+

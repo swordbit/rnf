@@ -1,0 +1,36 @@
+<?php
+/**
+ * @file
+ * Une fonction pour remplacer les tirets par des espaces dans la recherche
+ */
+
+/**
+ * Implements hook_help().
+ *
+ * Displays help and module information.
+ *
+ * @param path 
+ *   Which path of the site we're using to display help
+ * @param arg 
+ *   Array that holds the current path as returned from arg() function
+ */
+function rnf_search_help($path, $arg) {
+  switch ($path) {
+    case "admin/help#rnf_search":
+      return '<p>' . t("Enhances default search for RNF") . '</p>';
+      break;
+  }
+}
+
+/**
+ * Implements hook_search_preprocess().
+ *
+ * @param text 
+ *   The text to preprocess
+ */
+function rnf_search_search_preprocess($text) {
+  // Remplacement des tirets par un espace
+  $text = preg_replace('/[-]+/', ' ', $text);
+
+  return $text;
+}

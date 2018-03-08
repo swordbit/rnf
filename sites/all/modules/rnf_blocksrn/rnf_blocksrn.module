@@ -1,0 +1,581 @@
+<?php
+/**
+ * @file
+ * Un module de blocks pour les pages de RN sur le site RNF
+ */
+
+module_load_include('inc', 'rnf_blocksrn', 'utils');
+module_load_include('inc', 'rnf_blocksrn', 'rn_fiche');
+module_load_include('inc', 'rnf_blocksrn', 'departements');
+//module_load_include('inc', 'rnf_blocksrn', 'region_map');
+//module_load_include('inc', 'rnf_blocksrn', 'regions');
+
+/**
+ * Implements hook_help().
+ *
+ * Displays help and module information.
+ *
+ * @param path 
+ *   Which path of the site we're using to display help
+ * @param arg 
+ *   Array that holds the current path as returned from arg() function
+ */
+function rnf_blocksrn_help($path, $arg) {
+  switch ($path) {
+    case "admin/help#rnf_blocksrn":
+      $txt = '<p>' . t("Ajoute différents blocs pour les fiches de RN").':<br/>';
+      $txt .= t("- Situation<br/>"); 
+      $txt .= t("- Informations<br/>"); 
+      //      $txt .= t("- Carte<br/>"); 
+      $txt .= t("- Lien Actualités<br/>"); 
+      $txt .= t("- Lien Correction<br/>"); 
+      $txt .= t("- Lien Facebook<br/>").'</p>';
+      return $txt;
+      break;
+  }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function rnf_blocksrn_block_info() {
+  $blocks['rnf_facebook'] = array(
+    'info' => t('Réserve : Lien Facebook'),
+    //'cache' => DRUPAL_CACHE_PER_ROLE,
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  $blocks['rnf_correction'] = array(
+    'info' => t('Réserve : Lien correction'),
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+
+  $blocks['rnf_actua_rn'] = array(
+    'info' => t('Réserve : Lien actualités'),
+    //'cache' => DRUPAL_CACHE_PER_ROLE,
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  $blocks['rnf_situation_rn'] = array(
+    'info' => t('Réserve : Situation'),
+    //'cache' => DRUPAL_CACHE_PER_ROLE,
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  $blocks['rnf_fiche_rn'] = array(
+    'info' => t('Réserve : Fiche'),
+    //'cache' => DRUPAL_CACHE_PER_ROLE,
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  /*
+  $blocks['rnf_carte_rn'] = array(
+    'info' => t('Réserve : Carte'),
+    //'cache' => DRUPAL_CACHE_PER_ROLE,
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  */
+  return $blocks;
+}
+
+/**
+* Implements hook_block_view().
+*/
+function rnf_blocksrn_block_view($block_name = '') {
+  if ($block_name == 'rnf_facebook') {
+    $fblink = get_facebook_link();
+    if ($fblink != '')
+      return array('subject' => 'Facebook', 'content' => $fblink);
+    else 
+      return array();
+  }
+
+  if ($block_name == 'rnf_actua_rn') {
+    $alink = get_actua_rn();
+    if ($alink != '')
+      return array('subject' => 'Actu', 'content' => l(t('Actualités'), $alink));
+    else
+      return array();
+  }
+
+  if ($block_name == 'rnf_correction') {
+    $correct = get_correction_rn();
+    if ($correct != '')
+      return array('subject' => 'Correction', 'content' => l(t('Proposer une correction'), $correct));
+    else
+      return array();
+  }
+
+  if ($block_name == 'rnf_fiche_rn') {
+    $fiche = get_fiche_rn();
+    return array('subject' => 'Fiche', 'content' => $fiche);
+  }
+
+  if ($block_name == 'rnf_situation_rn') {
+    $content = get_situation_rn();
+    return array('subject' => 'Situation', 'content' => $content);
+  }
+
+  if ($block_name == 'rnf_carte_rn') {
+    $content = get_carte_rn();
+    return array('subject' => 'Carte', 'content' => $content);
+  }
+}
+
+/**
+* Recherche la derniere breve d'actualite qui concerne une RN
+*/
+function get_actua_rn()
+{ 
+  $actua = '';
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $rnnid = arg(1);
+    if ($rnnid != 'add')
+      {
+	$curdate = date("Y-m-d");
+	$query = new EntityFieldQuery();
+	$query->entityCondition('entity_type', 'node')
+	  ->entityCondition('bundle', 'actualites')
+	  ->fieldCondition('field_reserve', 'nid', $rnnid, '=')
+	  ->fieldCondition('field_date_retrait', 'value', $curdate, '>=')
+	  ->addMetaData('account', user_load(1));
+	$result = $query->execute();
+	if (isset($result['node'])) 
+	  {
+	    $nids = array_keys($result['node']);
+	    if (count($nids) > 0)
+	      {
+		$firstnid = $nids[0];
+		$actua = drupal_lookup_path('alias', "node/".$firstnid);
+		//echo "<a href=\"../$act_url\">Actualit&eacute;s</a>";
+	      }
+	  }
+      }
+  }
+  return $actua;
+}
+
+/**
+* Recherche la derniere breve d'actualite qui concerne une RN
+*/
+function get_correction_rn()
+{ 
+  $link = '';
+
+  // ancien code pour savoir si un utilisateur est connecte
+  //  global $user;
+  //$myuid = (bool) $user->uid;
+  //  if ($myuid)
+
+  if (user_is_logged_in())
+    {
+      // utilisateur connecte 
+      if (arg(0) == 'node' && is_numeric(arg(1))) {
+	$nid = arg(1);
+	if ($nid != '' && $nid != 'add') 
+	  {
+	    $node = node_load($nid); 
+	    if (isset($node->title))
+	      {
+		$subject = "Proposition de correction pour la RN ".$node->title;
+		$message = "Proposition de correction pour la RN ".$node->title;
+		$url = "contact?category=Proposition+de+correction";
+		$url .= "&subject=".urlencode($subject);
+		$url .= "&message=".urlencode($message);
+		//echo "<a href=\"$url\">Proposer une correction</a>";
+		$link = $url;
+	      }
+	  }
+      }
+    }
+  return $link;
+}
+
+/* code facebook :
+ <iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo urlencode('http://fr-fr.facebook.com/maisondelareserve'); ?>&layout=button_count&show_faces=false&width=140&action=like&colorscheme=light" scrolling="no" frameborder="0" allowTransparency="true" style="border:none; overflow:hidden; width:140px; height:50px; margin-top: 10px; margin-left: 8px;"></iframe>
+*/
+
+function get_facebook_link()
+{
+  $result = '';
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $nid = arg(1);    // Get the nid
+    $node = node_load($nid);  // Load the node if you need to
+    if (isset($node->field_facebook))
+      {
+	$fblink = gfv($node, 'field_facebook', '');
+	    
+	//$content = '<iframe src="http://www.facebook.com/plugins/like.php?href='.urlencode(trim($fblink)).'&layout=button_count&show_faces=false&width=140&action=like&colorscheme=light" scrolling="no" frameborder="0" allowTransparency="true" style="border:none; overflow:hidden; width:240px; height:21px; margin-top: 3px; margin-left: 0px;"></iframe>';
+
+	if ($fblink != '')
+	  {
+	    if (!strstr($fblink, 'http'))
+	      $fblink = 'https://'.trim($fblink);
+	    $result = '<a target="_blank" href="'.$fblink.'"><img height="25" alt="Page Facebook de la réserve naturelle" title="Page Facebook de la réserve naturelle" width="25" src="/sites/all/themes/theme_rnf/images/logo_f_facebook.png"></a>';
+	    //else
+	    //$result = '<div style="width: 78px;"></div>';
+	  }
+      }
+  }
+    
+  return $result;
+}
+
+
+function get_situation_rn()
+{
+  $result = '';
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $nid = arg(1);    // Get the nid
+    $node = node_load($nid);  // Load the node if you need to
+    
+    if (isset($node->field_code))
+      {
+	$rncode = gfv($node, 'field_code');
+	$lat    = gfv($node, 'field_latitude', '0.0');
+	$long   = gfv($node, 'field_longitude', '0.0');
+	$dpttab = gfvtab($node, 'field_departement', array());
+
+	$depts = array();
+	foreach($dpttab as $dptval)
+	  {
+	    if (trim($dptval['value']) != '')
+	      $depts[] = $dptval['value'];
+	  }
+	if (count($depts) == 1)
+	  $dpt = $depts[0];
+	else
+	  $dpt = "0"; // plusieurs departements : metropole
+
+	//$fondpath = $base_url.'/sites/all/themes/theme_rnf/images/';
+	$fondpath = '/sites/all/themes/theme_rnf/images/';
+	$imgfond = $fondpath.'fond_regions.png'; 	
+
+	// image map
+	$result .= "<div id=\"pic\" style=\"height: 250px; width: 180px; background-image: url('$imgfond'); background-repeat: no-repeat\">\n";
+	  
+	$width  = 180;
+	$height = 250;
+	switch($dpt)
+	  {
+	  case '971': // Guadeloupe 
+	    // Longitude
+	    // minimum = Iles          -61.1188 => 83
+	    // maximum = Gd Connetable -61.0084 => 88
+	    // delta : 0.1104                   => 5
+	    $xpos = 5 * (($long -(-61.1188))/0.1104) + 83;
+	    // Latitude
+	    // minimum = Iles          16.173  => 197 //250-197 = 53
+	    // maximum = Gd Connetable 16.3391 => 187
+	    // delta : 0.1661                   => 10
+	    $ypos = $height - (10 * (($lat -16.173)/0.1661) + 53);
+	    break;
+
+	  case '972': // Martinique
+	    // Longitude
+	    // minimum = Presqu'île    -60.8855 => 123
+	    // maximum = Ilets         -60.8324 => 127
+	    // delta : 0.0531                   => 4
+	    $xpos = 4 * (($long -(-60.8855))/0.0531) + 123;
+	    // Latitude
+	    // minimum = Ilets         14.4142 => 207 //250-207 = 43
+	    // maximum = Presqu'île    14.7688 => 186 
+	    // delta : 0.3546                  => 21
+	    $ypos = $height - (21 * (($lat -14.4142)/0.3546) + 43);
+	    break;
+
+	  case '973': // Guyane
+	    // Longitude
+	    // minimum = Amana           -53.7149 => 63
+	    // maximum = Gd Connetable   -51.9439 => 80
+	    // delta : 1.771                      => 17
+	    $xpos = 17 * (($long -(-53.7149))/1.771) + 63;
+	    // Latitude
+	    // minimum = Nouragues         4.0736 => 230 //250-230=20
+	    // maximum = Amana             5.6558 => 217
+	    // delta : 1.5822                    => 13
+	    $ypos = $height - (13 * (($lat -4.0736)/1.5822) + 20);
+	    break;
+		  
+	  case '974': // Réunion
+	    // Longitude
+	    // minimum = Marine        55.2586 => 141
+	    // maximum = Etang         55.2923 => 143
+	    // delta : 0.0337	           => 2
+	    $xpos = 2 * (($long -55.2586)/ 0.0337) + 141;
+	    // Latitude
+	    // minimum = Marine       -21.1365 => 188
+	    // maximum = Etang        -20.9989 => 196
+	    // delta : 0.1376                  => 8
+	    $ypos = $height - (8 * (($lat -(-21.1365))/0.1376) + 52);
+	    break;
+
+	  case '976': // Mayotte
+	    $xpos = 121;
+	    $ypos = 231;
+	    break;		  
+	  case '977': // Saint-Barthélemy
+	    $xpos = 27;
+	    $ypos = 229;
+	    break;      
+	  case '978': // Saint-Martin
+	    $xpos = 39;
+	    $ypos = 178;
+	    break;      
+	  case '984': // TAAF`
+	    $xpos = 164;
+	    $ypos = 237;
+	    break;
+
+	  default: // Metropole
+	    // Longitude
+	    // minimum = Iroise      -4.975610  => x = 5
+	    // maximum = Delta Sauer  8.134090  => x = 160
+	    // delta :           13.11          => 155 
+	    $xpos = 155 * (($long -(-4.975610))/13.11) + 5;
+
+	    // Latitude:
+	    // minimum = Bonifacio      41.363150 => y = 173
+	    // maximum = Dune Marchand  51.073280 => y = 6
+	    // delta :                   9,710    => 167 
+	    $ypos = 180 - (167 * (($lat -41.363150)/9.710) + 6);
+	  }
+
+	$usecanvas = true;
+	  
+	if ($usecanvas)
+	  {
+	    $result .= "<canvas id=\"situationRN\" width=\"$width\" height=\"$height\" style=\"\">";
+	    $result .= "Fallback content, in case the browser does not support Canvas.";
+	    $result .= "</canvas>\n";
+
+	    $result .= "<script type=\"text/javascript\">\n";
+	    $result .= "<!--\n";
+	    $result .= "var elem = document.getElementById('situationRN');\n";
+	    $result .= "if (elem && elem.getContext) {\n";
+	    $result .= "var context = elem.getContext('2d');\n";
+	    $result .= "if (context) {\n";
+	    $result .= "context.fillStyle   = '#f00'\n";
+	    $result .= "context.beginPath();\n";
+	    $result .= "context.arc($xpos, $ypos, 5, 0, 360, false);\n";
+	    $result .= "context.fill();\n";
+	    $result .= "context.closePath();\n";
+	    $result .= "}\n";
+	    $result .= "}\n";
+	    $result .= "// -->\n";
+	    $result .= "</script>\n"; 
+	  }
+	  
+	$imghover = $fondpath.'region_vide.png';
+	$result .= "<img id=\"hovered\" src=\"$imghover\" usemap=\"#regionMap\" width=\"180\" height=\"250\" style=\"position: absolute; top: 68px;\"/>";
+	$result .= "<map name=\"regionMap\">\n";
+	include('region_map.inc');
+	include('regions.inc');
+	foreach($regmap as $rcode => $rzone)
+	  {
+	    if (strstr($rcode, '-'))
+	      $rcode = substr($rcode, 0, 1);
+	    $name = $regions[$rcode];
+	    $alt  = htmlentities($name);
+	    $url = make_url($name);
+	    $result .= "<area href=\"$url\" alt=\"$alt\" title=\"$alt\" onmouseover=\"swapReg(this,$rcode)\" shape=\"polygon\" coords=\"$rzone\">\n";
+	  }
+	$result .= "</map>";	
+	$result .= "</div>";
+
+	//echo "Lat  : $lat / $ypos<br>";  
+	//echo "Long : $long / $xpos<br>"; 
+
+      }
+  }
+  return $result;
+}
+
+function get_carte_rn()
+{
+  $name = '';
+  $publie = false;
+  $surf = 0.0;
+  $type = 'RNN';
+  $lat = 0.0;
+  $long = 0.0;
+  $map = '';
+
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $rnnid = arg(1);
+    if ($rnnid != 'add')
+      {
+	$rncode = 0;
+	$node = node_load($rnnid);
+	if (isset($node->field_code))
+	  {
+	    $rncode   = gfv($node, 'field_code', 0);
+	    $name     = mb_convert_encoding($node->title, 'ISO-8859-1', 'UTF-8');
+	    $longname = $node->title; 
+	    $type     = gfv($node, 'field_typern', ''); 
+	    $surf     = gfv($node, 'field_surface', 0);
+	    $long     = gfv($node, 'field_longitude', '0.0');
+	    $lat      = gfv($node, 'field_latitude', '0.0');
+	    $publie   = gfv($node, 'field_publie', 'Non');
+	  
+	    if ($publie == 'Non' || $publie == '0')
+	      $map .= "<span style=\"color: red;\">Avertissement : suite &agrave; la loi \"D&eacute;mocratie de proximit&eacute;\", cette r&eacute;serve n'est actuellement plus class&eacute;e.</span>";
+
+	    //echo '<h3>Localisation</h3>';
+	    if ($surf < 5)
+	      $zoom = 16;    // moins de 5
+	    else if ($surf < 10)
+	      $zoom = 15;    // entre 5 et 10
+	    else if ($surf < 300)
+	      $zoom = 14;    // entre 10 et 300
+	    else if ($surf < 1000)
+	      $zoom = 13;    // entre 300 et 1000
+	    else if ($surf < 3000)
+	      $zoom = 12;    // entre 1000 et 3000
+	    else if ($surf < 10000)
+	      $zoom = 11;   // entre 3000 et 10000
+	    else if ($surf < 1000000)
+	      $zoom = 10;   // entre 10000 et 1000000 (nouragues)
+	    else
+	      $zoom = 7; // max = 2270000
+           
+	    // corrections specifiques de zoom pour certaines RN
+	    // trop eclatees ou etalees
+	    if ($rncode == 'RNN73')  // geologique-de-haute-provence
+	      $zoom = 10;
+	    if ($rncode == 'RNN90')  // geologique-du luberon
+	      $zoom = 10;
+	    if ($rncode == 'RNR270')  // crozon
+	      $zoom = 11;
+	    if ($rncode == 'RNN170') // coteaux-de-la-seine
+	      $zoom = 12;
+	    if ($rncode == 'RNR195') // landes-de-lan-bern-et-magoar-pen-vern
+	      $zoom = 12;
+	    if ($rncode == 'RNR231') // marais-de-la-taute
+	      $zoom = 12;
+	    if ($rncode == 'RNN145') // pointe de givet
+	      $zoom = 12;
+	    if ($rncode == 'RNN167') // grottes et pelouses
+	      $zoom = 13;
+	    if ($rncode == 'RNN108') // iroise
+	      $zoom = 12;
+	    if ($rncode == 'RNR210') // plateau des landes
+	      $zoom = 12;  
+	    if ($rncode == 'RNN96') // sites geol de l'essone
+	      $zoom = 11;  
+	    if ($rncode == 'RNR196') // cragou et vergam
+	      $zoom = 12;
+	    if ($rncode == 'RNN5') // banc d'arguin
+	      $zoom++; 
+	    if ($rncode == 'RNR258') // cailleries
+	      $zoom++;
+	    if ($rncode == 'RNN137') // estuaire de la seine
+	      $zoom--;
+	    if ($rncode == 'RNN63') // ile-de-groix
+	      $zoom--; 
+	    if ($rncode == 'RNN62') // saucats-la-brede
+	      $zoom--;
+	    if ($rncode == 'RNN11') // haute-vallee-severaise
+	      $zoom--; 
+	    if ($rncode == 'RNR78') // iles-du-haut-rhone
+	      $zoom--;
+	    if ($rncode == 'RNR75') // jasseries de colleigne
+	      $zoom--;
+	    if ($rncode == 'RNN155') // la bassee
+	      $zoom--; 
+	    if ($rncode == 'RNR191') // lac de gd-lieu-rnr
+	      $zoom--;
+	    if ($rncode == 'RNN1') // lac luitel
+	      $zoom++; 
+	    if ($rncode == 'RNR11') // larris et tourbiere
+	      $zoom--;
+	    if ($rncode == 'RNR257') // marais de briere
+	      $zoom--;
+	    if ($rncode == 'RNN176') // massif forestier strasbourg
+	      $zoom--;
+	    if ($rncode == 'RNN89') // ramieres du val de drome
+	      $zoom--;
+	    if ($rncode == 'RNN141') // rochers et tourbieres bitche
+	      $zoom--; 
+	    if ($rncode == 'RNN26') // saint-mesmin
+	      $zoom--;
+	    if ($rncode == 'RNN32') // sept-iles
+	      $zoom--; 
+	    if ($rncode == 'RNN119') // val-d-allier
+	      $zoom--;
+	    if ($rncode == 'RNR134') // vallee de la renaudie
+	      $zoom--;
+	    if ($rncode == 'RNN37') // gd pierre et vitain
+	      $zoom--;
+	  
+	    $latoffset = 0.0;
+	    $longoffset = 0.0;
+	    // corrections de position pour certaines RN
+	    if ($rncode == 'RNN167') // grottes et pelouses
+	      {
+		$latoffset = 0.02;
+		$longoffset = -0.02;
+	      }
+	    if ($rncode == 'RNN174') // belle henriette
+	      {
+		$longoffset = -0.015;
+	      }
+	    if ($rncode == 'RNN62') // saucats-la-brede
+	      {
+		$longoffset = -0.015;
+	      }
+	    if ($rncode == 'RNN63') // ile-de-groix
+	      { 
+		$latoffset = 0.018;
+		$longoffset = -0.035;
+	      } 
+	    if ($rncode == 'RNR256') // grand-voyeux
+	      {  
+		$latoffset = 0.005;
+		$longoffset = -0.005;
+	      }
+	    if ($rncode == 'RNN108') // iroise
+	      {
+		$latoffset = -0.015;
+		$longoffset = 0.01;
+	      } 
+	    if ($rncode == 'RNN23') // sagnes de la godivelle
+	      {
+		$latoffset = 0.005;
+	      }
+	    if ($rncode == 'RNN96') // sites geol de l'essone
+	      {
+		$latoffset = -0.05;
+	      }
+
+	    //global $base_url;
+	    $leafpath  = "/sites/all/libraries/leaflet";
+	    $map .= "<script type=\"text/javascript\">\n";
+	    $map .= "<!--\n";
+	    $map .= 'function MT(name, domain) { document.write("<a href=\"mailto:" + name + "\u0040" + domain + "\">" + name + "\u0040" + domain + "</a>"); } ';
+	    $map .= "var rn_itemList = [\n";
+	    $map .= "{latit:\"$lat\", longi:\"$long\", ";
+	    $map .= "title:\"".he($name)."\", ";
+	    $map .= "type:\"$type\", code:\"$rncode\"}\n";
+	    $map .= "];\n";
+	    $rnlat  = $lat + $latoffset;
+	    $rnlong = $long + $longoffset;
+	    $map .= "var rn_lat = $rnlat;\n";
+	    $map .= "var rn_long = $rnlong;\n";
+	    $map .= create_limit($name, $rncode); 
+	    $map .= "  var   zoom = $zoom;\n";
+	    $map .= "// -->\n";
+	    $map .= "</script>\n"; 
+	    $map .= "<link rel=\"stylesheet\" href=\"".$leafpath."/leaflet.css\" type=\"text/css\"/>\n";
+	    $map .= "<!--[if lte IE 8]><link rel=\"stylesheet\" href=\"".$leafpath."/leaflet.ie.css\" /><![endif]-->\n";
+
+	    // emplacement de la carte
+	    $map .= "<div id=\"divleaf\" style=\"width: 420px; height: 450px;\"></div>\n";
+
+	    $map .= "<script type=\"text/javascript\" src=\"".$leafpath."/leaflet.js\"></script>\n";
+	    $map .= "<script type=\"text/javascript\" src=\"".$leafpath."/rn_simple_map.js\"></script>\n";
+	  }
+      }
+  }
+  return $map;
+}

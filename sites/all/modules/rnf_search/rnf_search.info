@@ -1,0 +1,4 @@
+name = RNF Search
+description = Prise en compte des tirets dans la recherche RNF
+package = RNF
+core = 7.x

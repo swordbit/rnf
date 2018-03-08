@@ -1,0 +1,5 @@
+name = RNF Blocks RN
+description = Blocs pour les pages de RN
+package = RNF
+core = 7.x
+scripts[] = swapregion.js

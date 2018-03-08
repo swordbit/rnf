@@ -1,0 +1,28 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the Node Revision module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function node_revision_delete_install() {
+  // Ensure the blog node type is available.
+  node_types_rebuild();
+  $types = node_type_get_types();
+  variable_set('node_revision_delete_number', 5);
+  variable_set('node_revision_delete_content_type', 0);
+  variable_set('node_revision_delete_time', 0);
+  variable_set('node_revision_delete_last_execute', 0);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function node_revision_delete_uninstall() {
+  variable_del('node_revision_delete_number');
+  variable_del('node_revision_delete_content_type');
+  variable_del('node_revision_delete_time');
+  variable_del('node_revision_delete_last_execute');
+}

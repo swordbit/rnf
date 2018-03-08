@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * Implements hook_mail_alter().
+ * 
+ * Changes "from" address on contact page autoreplies to hide email address
+ */
+function contact_hide_email_mail_alter(&$message) {
+  switch ($message['id']) {
+    case 'contact_page_autoreply':
+      if (!empty($message['params']['cid'])) {
+        $cid = $message['params']['cid'];
+        $contact_hide_email_settings = variable_get('contact_hide_email_settings', array());
+        if (!empty($contact_hide_email_settings[$cid])) {
+          if ($default_from = variable_get('site_mail', ini_get('sendmail_from'))) {
+            $message['from'] = $default_from;
+            $message['headers']['From'] = $default_from;
+          }
+        } // hide "from"?
+      } // got a cid?
+      break;
+  } // end switch on message id
+} // end contact_hide_email_mail_alter()
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function contact_hide_email_form_contact_category_edit_form_alter(&$form, $form_state) {
+  // get the current settings
+  $contact_hide_email_settings = variable_get('contact_hide_email_settings', array());
+  // change the weights of the existing fields
+  $form['category']['#weight'] = -10;
+  $form['recipients']['#weight'] = -9;
+  $form['reply']['#weight'] = -8;
+  // add the new field
+  $default_value = (!empty($contact_hide_email_settings[$form['cid']['#value']])) ? $contact_hide_email_settings[$form['cid']['#value']] : 0;
+  $form['hide_email'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Hide recipient\'s email address in auto-reply?'),
+    '#description' => t('By default, the auto-reply email will come from the email address specified as the recipient above. Check this box to make that email come from the site default email instead.'),
+    '#required' => FALSE,
+    '#default_value' => $default_value,
+    '#weight' => -7,
+  );
+  $form['weight']['#weight'] = -6;
+  $form['selected']['#weight'] = -5;
+  $form['#submit'][] = 'contact_hide_email_form_contact_admin_edit_submit';
+} // end contact_hide_email_form_contact_admin_edit_alter()
+
+
+function contact_hide_email_form_contact_admin_edit_submit($form, &$form_state) {
+  if ($form_state['values']['cid']) {
+    // get the current settings
+    $contact_hide_email_settings = variable_get('contact_hide_email_settings', array());
+    // save the new settings
+    $contact_hide_email_settings[$form_state['values']['cid']] = $form_state['values']['hide_email'];
+    variable_set('contact_hide_email_settings', $contact_hide_email_settings);
+  }
+} // end contact_hide_email_form_contact_admin_edit_submit()

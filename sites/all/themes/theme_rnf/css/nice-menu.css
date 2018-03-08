@@ -1,0 +1,152 @@
+/*
+  This is the default layout template for nice menus, and will provide
+  a starting point for the look of your menus. To customize, it's
+  recommended to create a custom CSS file using this file as a template,
+  then configure the module to use your custom CSS file
+  (this is done in the global settings tab of the theme administration.)
+
+  See README.txt and the handbook page (http://drupal.org/node/185543)
+  for more information on using the CSS.
+*/
+
+/******************************
+ Global CSS for ALL menu types
+******************************/
+
+ul.nice-menu,
+ul.nice-menu ul {
+  float: none;
+  left: auto; top: auto;
+  list-style: none;
+  padding: 0; margin: 0; 
+  width: 745px; height: 28px; 
+  text-align: center;
+}
+
+ul.nice-menu li {
+  display: inline;  
+  font-size: 80%; 
+  float: left; /* LTR */
+  width: 143px; height: 28px;
+  padding: 0; margin: 0;
+}
+
+/* liens de premier niveau */
+ul.nice-menu a { display: block; float: left;        
+                 width: 143px; line-height: 25px; 
+                 background: url(../images/bouton.png) no-repeat top center;
+                 color: #333; border: none;
+                 font-weight: bold;
+                 padding: 0; margin: 0;
+                 text-decoration: none; text-align:center; 
+}
+
+li.menu-path-node-25 a { color: #f18e00; }
+
+ul.nice-menu a:hover { display: block; float: left;        
+                 width: 143px; line-height: 25px; 
+                 background: url(../images/bouton2.png) no-repeat top center;
+                 color: #333; border: none;
+                 font-weight: bold;
+                 padding: 0; margin: 0;
+                 text-decoration: none; text-align:center; 
+}
+
+/* liens de niveau inferieur */
+
+ul.nice-menu ul li { font-size: 100%; margin-top: -2px;  }
+
+ul.nice-menu li ul a { display: block; float: left;        
+                 background: #ddd;
+                 border: 1px solid #ccc;
+                 border-bottom: none;
+}
+
+ul.nice-menu li ul a:hover { display: block; float: left;        
+                 background: white;
+                 border: 1px solid #ccc;
+                 border-bottom: none;
+                 color: #ccc; 
+}
+
+ul.nice-menu ul {
+  top: 2.5em;
+  left: -1px; /* LTR */
+  border: none;
+  margin-right: 0; /* LTR */
+}
+
+/******************************
+ HORIZONTAL (down) menus
+******************************/
+
+ul.nice-menu-down {
+  float: left; /* LTR */
+  border: 0;
+}
+
+ul.nice-menu-down li {
+ /* border-top: 1px solid #ccc; */
+}
+
+ul.nice-menu-down li li {
+  border-top: 0;
+}
+
+ul.nice-menu-down ul {
+  left: 0; /* LTR */
+}
+
+ul.nice-menu-down ul li {
+  clear: both;
+}
+
+ul.nice-menu-down li ul li ul {
+  left: 12.5em; /* LTR */
+  top: -1px;
+}
+
+ul.nice-menu-down .menuparent a {
+ /* padding-right: 15px; */ /* LTR */
+}
+
+/******************************
+ Garland-specific CSS
+******************************/
+
+/**
+ * Global CSS for ALL menu types
+ */
+ul.nice-menu li {
+  margin: 0;
+  padding-left: 0; /* LTR */
+  background-image: none;
+}
+
+#header-region ul.nice-menu li {
+  margin: 0;
+  /* Padding rules are needed to deal with Garland's header line-height. */
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  background: #eee;
+}
+
+#header-region ul.nice-menu ul {
+  top: 1.8em;
+  left: -1px; /* LTR */
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin-right: 0; /* LTR */
+}
+
+#header-region ul.nice-menu ul {
+  top: 1.7em;
+}
+
+/**
+ * HORIZONTAL (down) menus
+ */
+#header-region ul.nice-menu-down li ul li ul {
+  left: 12.5em; /* LTR */
+  top: -1px;
+}

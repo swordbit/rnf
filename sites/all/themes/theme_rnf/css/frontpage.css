@@ -1,0 +1,60 @@
+
+/* cadre exterieur */
+#page-wrapper { width: 1000px; margin: auto; padding: 0; }
+
+#top-menu {  margin: 0; padding: 0; 
+            margin-left: auto; margin-right: auto; }
+
+/* limitation de la hauteur du header */
+#header .section {  height: 35px; }   
+
+/* desactivation du logo RNF vert */
+#logo { display : none; }
+
+div#main-wrapper { margin: 0px; padding: 0px;
+                max-width: 100%;
+                margin-left: auto; margin-right: auto;
+                min-height: 630px;
+}
+
+/* cadre du contenu */
+
+#main #content { background: url(../images/fleur_rnf-635.jpg) no-repeat top center; 
+           margin: auto; padding: 0;
+           width: 1000px;
+           height: 635px; /* hauteur de la fleur RNF */
+}
+
+/* pour centrer le contenu sur toute la page */
+#content .region { position: absolute; 
+                   margin: 0px; padding: 0px; 
+                   left: 0px; width: 100%;
+} 
+
+/* le container au centre */
+.container { width: 1000px; margin-left: auto; margin-right: auto; }
+
+/* le titre principal en police euristile */
+.rnftitle { margin-top: 184px; margin-bottom: 30px; text-align: center; }
+
+/* le bandeau d'images : a affiner */
+ .imgbandeau { height: 166px; width: 1000px; 
+               text-align: left; letter-spacing: 0; word-spacing: 0;
+               margin-left: auto; margin-right: auto; } 
+
+#sl1 { float: left; }
+#sl2 { float: left; }
+#sl3 { float: left; }
+#sl4 { float: left; }
+#sl5 { float: left; }
+
+/* le slogan */
+.aujourdhui { height: 53px; width: 512px; margin-top: 21px;
+              margin-left: auto; margin-right: auto; }
+
+/* on cache la barre de droite */
+.region-sidebar-second { display: none; padding: 0px; margin: 0px; }  
+
+#block-menu-menu-menu-bas-de-page,
+#block-menu-menu-bas-de-page { margin-left: auto; margin-right: auto;
+}

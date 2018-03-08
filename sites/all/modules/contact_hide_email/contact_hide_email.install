@@ -1,0 +1,20 @@
+<?php
+/**
+ * @file
+ * Install, update, and uninstall functions for the contact_hide_email module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function contact_hide_email_install() {
+  variable_set('contact_hide_email_settings', array());
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function contact_hide_email_uninstall() {
+  variable_del('contact_hide_email_settings');
+}
+
