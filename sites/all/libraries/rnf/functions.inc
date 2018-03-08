@@ -790,8 +790,6 @@ function _displayRNMap()
 	    $zoom = 12;
 	  if ($rncode == 'RNC315') // iles du cap corse
 	    $zoom = 11; 
-	  if ($rncode == 'RNN5') // banc d'arguin
-	    $zoom++; 
 	  if ($rncode == 'RNR258') // cailleries
 	    $zoom++;
 	  if ($rncode == 'RNN137') // estuaire de la seine
@@ -835,7 +833,9 @@ function _displayRNMap()
 	  if ($rncode == 'RNN180') // interet geologique du lot
 	    $zoom = 10; 
 	  if ($rncode == 'RNR305') // coteaux chemin des dames
-	    $zoom = 11;
+	    $zoom = 11; 
+	  if ($rncode == 'RNR302') // tourbieres du morvan
+	    $zoom = 10;
 	  
 	  $latoffset = 0.0;
 	  $longoffset = 0.0;
