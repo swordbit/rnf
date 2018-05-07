@@ -7,9 +7,8 @@ package = MailJet
 dependencies[] = mailjet
 dependencies[] = entity
 
-; Information added by Drupal.org packaging script on 2017-11-20
-version = "7.x-2.16"
+; Information added by Drupal.org packaging script on 2018-04-26
+version = "7.x-2.17"
 core = "7.x"
 project = "mailjet"
-datestamp = "1511187488"
-
+datestamp = "1524751689"
