@@ -7,8 +7,8 @@ files[] = includes/mailjet.mail.inc
 ;dependencies[] = libraries
 dependencies[] = views_bulk_operations
 
-; Information added by Drupal.org packaging script on 2018-04-26
-version = "7.x-2.17"
+; Information added by Drupal.org packaging script on 2018-06-08
+version = "7.x-2.18"
 core = "7.x"
 project = "mailjet"
-datestamp = "1524751689"
+datestamp = "1528458188"
