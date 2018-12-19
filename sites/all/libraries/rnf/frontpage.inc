@@ -104,6 +104,10 @@ function DisplaySlideshow()
 
  echo '<div class="container">'."\n";
 
+ echo ' <div class="lifenatureadapt">'."\n";
+ echo ' <a href="projet-life-natur-adapt"><img width="150" alt="" title="" src="'.base_path().path_to_theme().'/images/logo_lifenaturadapt.jpg"/></a>';
+ echo '	</div>'."\n";
+
  // le titre "RESERVES NATURELLES DE FRANCE en police Eurostile-ExtendedTwo
  echo '	<div class="rnftitle">'."\n";
  echo ' <img width="1000" height="30" alt="" title="" src="'.base_path().path_to_theme().'/images/rnf_title.png"/>';
