@@ -36,7 +36,9 @@ div#main-wrapper { margin: 0px; padding: 0px;
 
 .lifenatureadapt { margin-left: 850px; cursor: pointer; margin-top: 30px; }
 
-.lifenatureadapt img:hover { border: 1px solid #cccccc; box-shadow: 5px 5px 5px 0 #cccccc; }
+.lifenatureadapt img { border: 1px solid #ccc; box-shadow: 5px 5px 5px 0 #ddd; }
+
+.lifenatureadapt img:hover { box-shadow: 5px 5px 5px 0 #aaa; }
 
 /* le titre principal en police euristile */
 .rnftitle { margin-top: 57px; margin-bottom: 30px; text-align: center; }
