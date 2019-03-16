@@ -26,8 +26,10 @@ function _displayCarteRN()
   echo "<img alt=\"\" title=\"\" width=\"$imgsize\" height=\"$imgsize\" src=\"".$leafpath."/rnn.png\"/>&nbsp;R&eacute;serve naturelle nationale ou de Corse / ";
   echo "<img alt=\"\" title=\"\" width=\"$imgsize\" height=\"$imgsize\" src=\"".$leafpath."/rnr.png\"/>&nbsp;R&eacute;serve naturelle r&eacute;gionale / ";
   //echo "<img alt=\"\" title=\"\" width=\"$imgsize\" height=\"$imgsize\" src=\"".$leafpath."/rnc.png\"/>&nbsp;R&eacute;serve naturelle de Corse";
-
-  echo "<div id=\"divleaf\" style=\"width: 720px; height: 650px;\"></div>\n";
+  if (php_uname('n') == 'horus')
+    echo "<div id=\"divleaf\" style=\"margin-left: -190px; width: 910px; height: 650px;\"></div>\n";
+  else
+    echo "<div id=\"divleaf\" style=\"width: 720px; height: 650px;\"></div>\n";
   
   echo "<script type=\"text/javascript\" src=\"".$leafpath."/leaflet.js\"></script>\n";
   echo "<script type=\"text/javascript\" src=\"".$leafpath."/rn_map.js\"></script>\n";
