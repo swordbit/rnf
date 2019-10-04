@@ -64,7 +64,7 @@ function _forum_access_forum_form(&$form, &$form_state, $is_container) {
       '#type' => 'radios',
       '#title' => t('Update the permissions'),
       '#description' => t('<em>If</em> you make any node access changes, then each node in this forum needs to be updated. Hover over the radiobuttons for details.'),
-      '#options' => NULL,
+      '#options' => array(0, 1, 2),
       0 => array(
         '#type' => 'radio',
         '#title' => t('for all %count nodes immediately', array('%count' => $count)),
@@ -401,7 +401,7 @@ function _forum_access_forum_interference_form($is_container, $na_modules, $fa_p
         }
       }
       $ca_priority = content_access_get_settings('priority', 'forum');
-      $is_conflict = ($ca_priority >= $fa_priority && !empty($ca_interferes) || $ca_priority > $fa_priority);
+      $is_conflict = (($ca_priority >= $fa_priority && !empty($ca_interferes)) || $ca_priority > $fa_priority);
       $variables += array(
         '!link'     => l(t('@Content_Access configuration for the %content_type type', $variables), 'admin/structure/types/manage/forum/access', array('html' => TRUE)),
         '%Advanced' => $tr('Advanced'),
