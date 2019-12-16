@@ -114,15 +114,14 @@ function _showTdB()
 	      if ($inpn != '' 
 		  && (($type == 'RNR' && strstr($inpn, 'FR93'))
 		      || ($type == 'RNN' && strstr($inpn, 'FR36'))
-		      || ($type == 'RNC' && strstr($inpn, 'FR36'))
-		      ))
+		      || ($type == 'RNC' && (strstr($inpn, 'FR36') || strstr($inpn, 'FR92')))))
 		{
 		  $nbinpn++;
 		  $note++;	// INPN rempli : + 1 point
 		  if ($wdpa != '')
 		    {  
 		      $nbwdpa++;
-		      if ($type == 'RNR' && !strstr($wdpa, '5555'))
+		      if ($type == 'RNR' && !preg_match('/^555/', $wdpa))
 			echo "<td style=\"background: $orange\" align=\"center\">$rncode</td>";		
 		      else
 			echo "<td style=\"background: $vert\" align=\"center\">$rncode</td>";
