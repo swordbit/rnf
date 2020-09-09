@@ -78,7 +78,7 @@ function _showTdBDocument()
 		      ))
 		echo "<td style=\"background: #cfc;\" align=\"center\">$rncode</td>";
 	      else
-		echo "<td style=\"background: #fcc;\" align=\"center\">$rncode</td>";
+		echo "<td title=\"INPN incorrect\" style=\"background: #fcc;\" align=\"center\">$rncode</td>";
 	      if ($bandeau != '')
 		{  
 		  $bandfile = _getFileName($rn, $bandeau);
@@ -89,7 +89,7 @@ function _showTdBDocument()
 		    }
 		  else
 		    {
-		      echo "<td align=\"center\" style=\"background: #fcc;\">Non</td>"; 
+		      echo "<td title=\"Pas bandeau ou num rn\" align=\"center\" style=\"background: #fcc;\">Non</td>"; 
 		    }
 		}
 	      else
@@ -114,11 +114,11 @@ function _showTdBDocument()
 		  if ($goodnames)
 		    echo "<td align=\"center\" style=\"background: #cfc;\">OK</td>";
 		  else
-		    echo "<td align=\"center\" style=\"background: #fcc;\">Non</td>";
+		    echo "<td title=\"Mauvais nom de photos\" align=\"center\" style=\"background: #fcc;\">Non</td>";
 		  if ($gooddesc)
 		    echo "<td align=\"center\" style=\"background: #cfc;\">OK</td>";
 		  else
-		    echo "<td align=\"center\" style=\"background: #fcc;\">Non</td>"; 
+		    echo "<td title=\"Format légende\" align=\"center\" style=\"background: #fcc;\">Non</td>"; 
 		}
 	      else
 		{
@@ -145,7 +145,8 @@ function _showTdBDocument()
 		      if ($type == 'RNN' 
 			  && (strstr($fname, 'decret') || strstr($fname, 'arret')))
 			$founddecret = true;
-		      if ($type == 'RNC' && strstr($fname, 'decret'))
+		      if ($type == 'RNC' && (strstr($fname, 'decret')
+		      	 	   	    || strstr($fname, 'delib')))
 			$founddecret = true;
 		      if ($type == 'RNR' && strstr($fname, 'delib'))
 			$founddecret = true;
@@ -155,20 +156,20 @@ function _showTdBDocument()
 		  if ($goodnames)
 		    echo "<td align=\"center\" style=\"background: #cfc;\">OK</td>";
 		  else
-		    echo "<td align=\"center\" style=\"background: #fcc;\">Non</td>"; 
+		    echo "<td title=\"Mauvais noms\" align=\"center\" style=\"background: #fcc;\">Non</td>"; 
 
 		  if ($founddecret)
 		    echo "<td align=\"center\" style=\"background: #cfc;\">OK</td>";
 		  else
 		    {
-		      echo "<td align=\"center\" style=\"background: #fcc;\">Non</td>";
+		      echo "<td title=\"Pas de decret\" align=\"center\" style=\"background: #fcc;\">Non</td>";
 		      $misdec++;
 		    }
 		  if ($foundplaquette)
 		    echo "<td align=\"center\" style=\"background: #cfc;\">OK</td>";
 		  else
 		    {
-		      echo "<td align=\"center\" style=\"background: #fcc;\">Non</td>"; 
+		      echo "<td  title=\"Pas de livret\" align=\"center\" style=\"background: #fcc;\">Non</td>"; 
 		      $misplq++;
 		    }
 		}

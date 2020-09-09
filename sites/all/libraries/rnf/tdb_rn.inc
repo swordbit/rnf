@@ -129,13 +129,13 @@ function _showTdB()
 		  else
 		    {
 		      $miswdpa++;
-		      echo "<td style=\"background: $rose\" align=\"center\">$rncode</td>";
+		      echo "<td title=\"Aucun WDPA\" style=\"background: $rose\" align=\"center\">$rncode</td>";
 		    }
 		}
 	      else
 		{
 		  $misinpn++;
-		  echo "<td style=\"background: $rouge\" align=\"center\">$rncode</td>";
+		  echo "<td title=\"Aucun INPN\" style=\"background: $rouge\" align=\"center\">$rncode</td>";
 		}
 	      if ($bandeau != '')
 		{  
@@ -148,7 +148,7 @@ function _showTdB()
 		  $isgood = false; 
 		  $neargood = false;
 		  $misband++;
-		  echo "<td align=\"center\" style=\"background: $rose\">Non</td>"; 
+		  echo "<td title=\"Aucun bandeau\" align=\"center\" style=\"background: $rose\">Non</td>"; 
 		}  
 	      if ($rnlogo != '')
 		{  
@@ -158,7 +158,7 @@ function _showTdB()
 	      else 
 		{
 		  $mislogo++;
-		  echo "<td align=\"center\" style=\"background: $rose\">Non</td>"; 
+		  echo "<td title=\"Aucun logo\" align=\"center\" style=\"background: $rose\">Non</td>"; 
 		}  
 
 	      if ($showleg)
@@ -200,11 +200,11 @@ function _showTdB()
 		  $totaltxt += $nbchar;
 
 		  if ($nbchar < 800)
-		    echo "<td align=\"center\" style=\"background: $rouge\">$nbchar $nd</td>"; 
+		    echo "<td title=\"< 800\" align=\"center\" style=\"background: $rouge\">$nbchar $nd</td>"; 
 		  else if ($nbchar < 1200)
-		    echo "<td align=\"center\" style=\"background: $rose\">$nbchar $nd</td>"; 
+		    echo "<td title=\"< 1200\" align=\"center\" style=\"background: $rose\">$nbchar $nd</td>"; 
 		  else if ($nbchar < 1600)
-		      echo "<td align=\"center\" style=\"background: $bleu\">$nbchar $nd</td>";
+		      echo "<td title=\"< 1600\" align=\"center\" style=\"background: $bleu\">$nbchar $nd</td>";
 		  else
 		    echo "<td align=\"center\" style=\"background: $vert\">$nbchar $nd</td>";
 		}
@@ -212,7 +212,7 @@ function _showTdB()
 		{ 
 		  $isgood = false;
 		  $mistext++;
-		  echo "<td align=\"center\" style=\"background: $rose\">Non</td>"; 
+		  echo "<td title=\"Aucun texte\" align=\"center\" style=\"background: $rose\">Non</td>"; 
 		}
 	      if ($photocount != 0)
 		{
@@ -240,7 +240,7 @@ function _showTdB()
 		  $isgood = false;
 		  $neargood = false;
 		  $misphot +=3;	// minimum 3 photos par RN
-		  echo "<td align=\"center\" style=\"background: $rouge\">$photocount</td>";
+		  echo "<td title=\"Moins de 3 photos\" align=\"center\" style=\"background: $rouge\">$photocount</td>";
 		}
 
 	      $nbm = 0;
@@ -262,7 +262,7 @@ function _showTdB()
 		  $isgood = false;
 		  //$neargood = false;
 		  $mismili++;
-		  echo "<td align=\"center\" style=\"background: $rose\">Non</td>"; 
+		  echo "<td title=\"Aucun milieu\" align=\"center\" style=\"background: $rose\">Non</td>"; 
 		}
 
 	      if ($showcomm)
@@ -283,7 +283,7 @@ function _showTdB()
 		      $isgood = false;
 		      $neargood = false;
 		      $miscomm++;
-		      echo "<td align=\"center\" style=\"background: $rose\">Non</td>"; 
+		      echo "<td title=\"Aucune commune\" align=\"center\" style=\"background: $rose\">Non</td>"; 
 		    }
 		}
 
@@ -298,7 +298,7 @@ function _showTdB()
 		  $isgood = false;
 		  $neargood = false;
 		  $mislimi++;
-		  echo "<td align=\"center\" style=\"background: $rouge\">Non</td>"; 
+		  echo "<td title=\"Aucune limite\" align=\"center\" style=\"background: $rouge\">Non</td>"; 
 		}
 
 	      if ($isgood)
@@ -323,9 +323,9 @@ function _showTdB()
 		}
 
 	      if ($note > 7)
-		echo "<td align=\"center\" style=\"background: $vert\">$note</td>";
+		echo "<td title=\"Note > 7\" align=\"center\" style=\"background: $vert\">$note</td>";
 	      else if ($note > 4)
-		echo "<td align=\"center\" style=\"background: $bleu\">$note</td>"; 
+		echo "<td title=\"Note > 4\" align=\"center\" style=\"background: $bleu\">$note</td>"; 
 	      else
 		echo "<td align=\"center\" style=\"background: $rose\">$note</td>"; 
 	      $edit = "../node/$nid/edit";
