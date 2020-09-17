@@ -836,6 +836,8 @@ function _displayRNMap()
 	    $zoom = 11; 
 	  if ($rncode == 'RNR302') // tourbieres du morvan
 	    $zoom = 10;
+	  if ($rncode == 'RNR307') // reseau de landes atlantiques
+	    $zoom = 10;
 	  
 	  $latoffset = 0.0;
 	  $longoffset = 0.0;
