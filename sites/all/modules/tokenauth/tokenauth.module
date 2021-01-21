@@ -181,9 +181,9 @@ function tokenauth_user_insert(&$edit, &$account, $category = NULL) {
 /**
  * Implements hook_user_delete().
  */
-function tokenauth_user_delete(&$edit, &$account, $category = NULL) {
-  $sql = 'DELETE FROM {tokenauth_tokens} WHERE uid = %d';
-  db_query($sql, $account->uid);
+function tokenauth_user_delete($account) {
+  $sql = 'DELETE FROM {tokenauth_tokens} WHERE uid = :uid';
+  db_query($sql, array(':uid'=>$account->uid));
 }
 
 /**
