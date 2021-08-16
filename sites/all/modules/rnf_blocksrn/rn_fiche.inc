@@ -335,7 +335,9 @@ function get_fiche_rn()
 
 	    $wdpaurl = 'http://protectedplanet.net/'.$wdpa;
 	    if ($wdpa != '')
-	      $fiche .= "<br/><br/><b>Id WDPA</b><br/><a target=\"_blank\" href=\"$wdpaurl\">".$wdpa."</a>";
+	      $fiche .= "<br/><br/><b>Id WDPA / EUNIS</b><br/><a target=\"_blank\" href=\"$wdpaurl\">".$wdpa."</a>";
+      $eunisurl = 'https://eunis.eea.europa.eu/sites/'.$wdpa;
+	      $fiche .= " / <a target=\"_blank\" href=\"$eunisurl\">".$wdpa."</a>";
 	    $fiche .= "<br/><br/>\n";
 
 	    $rnweb = gfv($node, 'field_website', '');
