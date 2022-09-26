@@ -41,11 +41,6 @@ class MatomoBasicTest extends DrupalWebTestCase {
     $this->drupalGet('admin/config/system/matomo');
     $this->assertRaw(t('Matomo site ID'), '[testMatomoConfiguration]: Settings page displayed.');
 
-    // Check for account code validation.
-    $edit['matomo_site_id'] = $this->randomName(2);
-    $this->drupalPost('admin/config/system/matomo', $edit, 'Save configuration');
-    $this->assertRaw(t('A valid Matomo site ID is an integer only.'), '[testMatomoConfiguration]: Invalid Matomo site ID number validated.');
-
     // User should have access to code snippets.
     $this->assertFieldByName('matomo_codesnippet_before');
     $this->assertFieldByName('matomo_codesnippet_after');

@@ -103,7 +103,7 @@ function matomo_page_alter(&$page) {
   // 1. Check if the matomo account number has a value.
   // 2. Track page views based on visibility value.
   // 3. Check if we should track the currently active user's role.
-  if (preg_match('/^\d{1,}$/', $id) && (_matomo_visibility_pages() || in_array($status, $trackable_status_codes)) && _matomo_visibility_user($user)) {
+  if (!empty($id) && (_matomo_visibility_pages() || in_array($status, $trackable_status_codes)) && _matomo_visibility_user($user)) {
 
     $url_http = variable_get('matomo_url_http', '');
     $url_https = variable_get('matomo_url_https', '');

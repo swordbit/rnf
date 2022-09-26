@@ -85,7 +85,7 @@ function matomo_requirements($phase) {
       }
 
       // Raise warning if Matomo user account has not been set yet.
-      if (!preg_match('/^\d{1,}$/', variable_get('matomo_site_id', ''))) {
+      if (empty(variable_get('matomo_site_id', ''))) {
         $requirements['matomo'] = array(
           'title' => $t('Matomo module'),
           'description' => $t('Matomo module has not been configured yet. Please configure its settings from the <a href="@url">Matomo settings page</a>.', array('@url' => url('admin/config/system/matomo'))),

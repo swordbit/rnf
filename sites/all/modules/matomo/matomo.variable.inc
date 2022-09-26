@@ -18,7 +18,6 @@ function matomo_variable_info($options) {
     'group' => 'matomo',
     'localize' => TRUE,
     'multidomain' => TRUE,
-    'validate callback' => 'matomo_validate_matomo_site_id',
   );
 
   return $variables;
@@ -36,17 +35,4 @@ function matomo_variable_group_info() {
   );
 
   return $groups;
-}
-
-/**
- * Validate Matomo site ID variable.
- *
- * @param array $variable
- *
- * @return string
- */
-function matomo_validate_matomo_site_id($variable) {
-  if (!preg_match('/^\d{1,}$/', $variable['value'])) {
-    return t('A valid Matomo site ID is an integer only.');
-  }
 }
