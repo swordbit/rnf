@@ -104,6 +104,31 @@ function DisplaySlideshow()
 
  echo '<div class="container">'."\n";
 
+if (true) {
+  // version 40 ans
+  
+echo ' <div class="anniv40ans">'."\n";
+echo '  <img width="143" alt="" title="" src="'.base_path().path_to_theme().'/images/logo_40ans.png"/>';
+echo ' <a target="_blank" href="https://naturadapt.com/"><img class="life" width="150" alt="" title="" src="'.base_path().path_to_theme().'/images/logo_lifenaturadapt.jpg"/></a>';
+echo '	</div>'."\n";
+
+ // le titre "RESERVES NATURELLES DE FRANCE en police Eurostile-ExtendedTwo
+ echo '	<div class="rnftitle">'."\n";
+ echo ' <img width="1000" height="30" alt="" title="" src="'.base_path().path_to_theme().'/images/rnf_title.png"/>';
+ echo '	</div>'."\n";
+
+ echo ' <div class="imgbandeau"> '."\n";
+ DisplaySlideshow();
+ echo '	</div>'."\n";
+
+ // le slogan "Aujourd'hui la terre de demain"
+ echo '	<div class="aujourdhui">'."\n";
+ echo ' <img width="512" height="53" alt="" title="" src="'.base_path().path_to_theme().'/images/aujourdhui_black.png"/>';
+ echo '	</div>'."\n";
+  
+} else {
+  
+  // version classique
  echo ' <div class="lifenatureadapt">'."\n";
  echo ' <a target="_blank" href="https://naturadapt.com/"><img width="150" alt="" title="" src="'.base_path().path_to_theme().'/images/logo_lifenaturadapt.jpg"/></a>';
  echo '	</div>'."\n";
@@ -121,6 +146,7 @@ function DisplaySlideshow()
  echo '	<div class="aujourdhui">'."\n";
  echo ' <img width="512" height="53" alt="" title="" src="'.base_path().path_to_theme().'/images/aujourdhui.png"/>';
  echo '	</div>'."\n";
+}
 
  echo '</div>'."\n";
 ?>

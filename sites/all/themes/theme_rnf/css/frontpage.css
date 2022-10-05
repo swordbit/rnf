@@ -19,7 +19,7 @@ div#main-wrapper { margin: 0px; padding: 0px;
 
 /* cadre du contenu */
 
-#main #content { background: url(../images/fleur_rnf-635.jpg) no-repeat top center; 
+#main #content { background: url(../images/marquage_40ans.png) no-repeat top center; 
            margin: auto; padding: 0;
            width: 1000px;
            height: 635px; /* hauteur de la fleur RNF */
@@ -33,6 +33,10 @@ div#main-wrapper { margin: 0px; padding: 0px;
 
 /* le container au centre */
 .container { width: 1000px; margin-left: auto; margin-right: auto; }
+
+.anniv40ans { margin-top: 30px; }
+.anniv40ans img.life { display: inline-block; border: 1px solid #ccc; box-shadow: 5px 5px 5px 0 #ddd; margin-left: 690px; cursor: pointer; }
+.anniv40ans img:hover { box-shadow: 5px 5px 5px 0 #aaa; }
 
 .lifenatureadapt { margin-left: 850px; cursor: pointer; margin-top: 30px; }
 
