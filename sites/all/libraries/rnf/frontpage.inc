@@ -108,7 +108,7 @@ if (true) {
   // version 40 ans
   
 echo ' <div class="anniv40ans">'."\n";
-echo '  <img width="143" alt="" title="" src="'.base_path().path_to_theme().'/images/logo_40ans.png"/>';
+echo ' <a target="_blank" href="https://assoconnect.reserves-naturelles.org/page/1298867-40-ans-du-reseau"><img width="143" alt="" title="" src="'.base_path().path_to_theme().'/images/logo_40ans.png"/></a>';
 echo ' <a target="_blank" href="https://naturadapt.com/"><img class="life" width="150" alt="" title="" src="'.base_path().path_to_theme().'/images/logo_lifenaturadapt.jpg"/></a>';
 echo '	</div>'."\n";
 
