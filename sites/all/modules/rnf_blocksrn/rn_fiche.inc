@@ -17,8 +17,10 @@ function get_og($ognid)
   $ogtel = gfv($og, 'field_telephone', '');
   $ogfax = gfv($og, 'field_fax', '');
   $ogweb = gfv($og, 'field_site_web', '');
-  if (strstr($ogweb, 'http'))
+  if (strstr($ogweb, 'http:'))
     $ogweb = str_replace('http://', '', $ogweb);
+  if (strstr($ogweb, 'https:'))
+    $ogweb = str_replace('https://', '', $ogweb);
   $ogemail = gfv($og, 'field_email', '');
 	
   if ($oglogo != '')		 
@@ -344,7 +346,9 @@ function get_fiche_rn()
 	    if ($rnweb != '')
 	      {
 		$fiche .= "<b>SITE INTERNET</b><br/><i>";
-		if (strstr($rnweb, 'http'))
+		if (strstr($rnweb, 'https:'))
+		  $rnweb = str_replace('https://', '', $rnweb);
+    if (strstr($rnweb, 'http:'))
 		  $rnweb = str_replace('http://', '', $rnweb);
 		$rnweb2 = rtrim($rnweb, '/');
 		if (strlen($rnweb2) > 60)
