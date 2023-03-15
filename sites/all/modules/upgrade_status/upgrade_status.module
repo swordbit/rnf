@@ -1,0 +1,217 @@
+<?php
+
+/**
+ * @file
+ * Checks to see if your installed modules are available for a selected major
+ * release of Drupal.
+ */
+
+/**
+ * Default version of core we want to query for.
+ */
+define('UPGRADE_STATUS_CORE_VERSION', '9.5.x');
+
+/**
+ * Project has a new release available, but it is not a security release.
+ */
+define('UPGRADE_STATUS_DEVELOPMENT', 1000);
+
+/**
+ * Project is available.
+ */
+define('UPGRADE_STATUS_STABLE', 5);
+
+/**
+ * Project has been moved into core.
+ */
+define('UPGRADE_STATUS_CORE', 5000);
+
+/**
+ * Project has become obsolete by an alternative.
+ */
+define('UPGRADE_STATUS_OBSOLETE', 3000);
+
+/**
+ * Project does not exist for this version (yet).
+ */
+define('UPGRADE_STATUS_UNAVAILABLE', 6000);
+
+/**
+ * Implementation of hook_menu().
+ */
+function upgrade_status_menu() {
+  $items['admin/reports/updates/upgrade'] = array(
+    'title' => 'Upgrade Status',
+    'page callback' => 'upgrade_status_status',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+    'file' => 'upgrade_status.report.inc'
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function upgrade_status_theme() {
+  return array(
+    'upgrade_status_report' => array(
+      'variables' => array('data' => NULL),
+      'file' => 'upgrade_status.report.inc',
+    ),
+    'upgrade_status_status_label' => array(
+      'variables' => array('status' => NULL, 'project' => NULL),
+    ),
+  );
+}
+
+/**
+ * Tries to get update information from cache and refreshes it when necessary.
+ *
+ * In addition to checking the cache lifetime, this function also ensures that
+ * there are no .info files for enabled modules or themes that have a newer
+ * modification timestamp than the last time we checked for available update
+ * data. If any .info file was modified, it almost certainly means a new version
+ * of something was installed. Without fresh available update data, the logic in
+ * update_calculate_project_data() will be wrong and produce confusing, bogus
+ * results.
+ *
+ * @param $refresh
+ *   (optional) Boolean to indicate if this method should refresh the cache
+ *   automatically if there's no data. Defaults to FALSE.
+ *
+ * @return
+ *   Array of data about available releases, keyed by project shortname.
+ *
+ * @see update_get_projects()
+ */
+function upgrade_status_get_available($refresh = FALSE) {
+  module_load_include('inc', 'upgrade_status', 'upgrade_status.compare');
+  $needs_refresh = FALSE;
+
+  // Grab whatever data we currently have cached in the DB.
+  $available = _upgrade_status_get_cached_available_releases();
+  $num_avail = count($available);
+
+  $projects = update_get_projects();
+  foreach ($projects as $key => $project) {
+    // If there's no data at all, we clearly need to fetch some.
+    if (empty($available[$key])) {
+      upgrade_status_create_fetch_task($project);
+      $needs_refresh = TRUE;
+      continue;
+    }
+
+    // See if the .info file is newer than the last time we checked for data,
+    // and if so, mark this project's data as needing to be re-fetched. Any
+    // time an admin upgrades their local installation, the .info file will
+    // be changed, so this is the only way we can be sure we're not showing
+    // bogus information right after they upgrade.
+    if ($project['info']['_info_file_ctime'] > $available[$key]['last_fetch']) {
+      $available[$key]['fetch_status'] = UPDATE_FETCH_PENDING;
+    }
+
+    // If we have project data but no release data, we need to fetch. This
+    // can be triggered when we fail to contact a release history server.
+    if (empty($available[$key]['releases'])) {
+      $available[$key]['fetch_status'] = UPDATE_FETCH_PENDING;
+    }
+
+    // If we think this project needs to fetch, actually create the task now
+    // and remember that we think we're missing some data.
+    if (!empty($available[$key]['fetch_status']) && $available[$key]['fetch_status'] == UPDATE_FETCH_PENDING) {
+      upgrade_status_create_fetch_task($project);
+      $needs_refresh = TRUE;
+    }
+  }
+
+  if ($needs_refresh && $refresh) {
+    // Attempt to drain the queue of fetch tasks.
+    upgrade_status_fetch_data();
+    // After processing the queue, we've (hopefully) got better data, so pull
+    // the latest from the cache again and use that directly.
+    $available = _upgrade_status_get_cached_available_releases();
+  }
+
+  return $available;
+}
+
+/**
+ * Creates a new fetch task after loading the necessary include file.
+ *
+ * @param $project
+ *   Associative array of information about a project. See update_get_projects()
+ *   for the keys used.
+ *
+ * @see _upgrade_status_create_fetch_task()
+ */
+function upgrade_status_create_fetch_task($project) {
+  module_load_include('inc', 'upgrade_status', 'upgrade_status.fetch');
+  return _upgrade_status_create_fetch_task($project);
+}
+
+/**
+ * Attempts to fetch update data after loading the necessary include file.
+ *
+ * @see _upgrade_status_fetch_data()
+ */
+function upgrade_status_fetch_data() {
+  module_load_include('inc', 'upgrade_status', 'upgrade_status.fetch');
+  return _upgrade_status_fetch_data();
+}
+
+/**
+ * Returns all currently cached data about available releases for all projects.
+ *
+ * @return
+ *   Array of data about available releases, keyed by project shortname.
+ */
+function _upgrade_status_get_cached_available_releases() {
+  $data = array();
+  $cache_items = _update_get_cache_multiple('upgrade_status_available_releases');
+  foreach ($cache_items as $cid => $cache) {
+    $cache->data['last_fetch'] = $cache->created;
+    if ($cache->expire < REQUEST_TIME) {
+      $cache->data['fetch_status'] = UPDATE_FETCH_PENDING;
+    }
+    // The project shortname is embedded in the cache ID, even if there's no
+    // data for this project in the DB at all, so use that for the indexes in
+    // the array.
+    $parts = explode('::', $cid, 2);
+    $data[$parts[1]] = $cache->data;
+  }
+  return $data;
+}
+
+/**
+ * Form to display Drupal core version selection.
+ */
+function upgrade_status_core_version_form($form, &$form_state) {
+  $last = variable_get('upgrade_status_last_check', 0);
+
+  $form['upgrade_status_core_version'] = array(
+    '#type' => 'select',
+    '#title' => t('Check upgrade status to version'),
+    '#options' => drupal_map_assoc(array('8.9.x', '9.5.x', '10.0.x')),
+    '#default_value' => variable_get('upgrade_status_core_version', UPGRADE_STATUS_CORE_VERSION),
+    '#description' => $last ? t('Last checked: @time ago', array('@time' => format_interval(REQUEST_TIME - $last))) : t('Last checked: never'),
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Check upgrade status'),
+  );
+  return $form;
+}
+
+/**
+ * Set the new Drupal core version in a variable; refresh project data.
+ *
+ * @todo Why do we do these shenanigans with the variable and not just let
+ * system_settings_form_submit do its thang?
+ */
+function upgrade_status_core_version_form_submit($form, &$form_state) {
+  variable_set('upgrade_status_core_version', $form_state['values']['upgrade_status_core_version']);
+  module_load_include('inc', 'upgrade_status', 'upgrade_status.fetch');
+  upgrade_status_manual_status();
+}
