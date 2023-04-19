@@ -104,7 +104,7 @@ function DisplaySlideshow()
 
  echo '<div class="container">'."\n";
 
-if (true) {
+if (false) {
   // version 40 ans
   
 echo ' <div class="anniv40ans">'."\n";
