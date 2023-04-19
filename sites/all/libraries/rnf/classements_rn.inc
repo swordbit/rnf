@@ -5,32 +5,32 @@ function Abbrev($name)
 {
   switch ($name)
     {
-    case 'Aquitaine-Limousin-Poitou-Charentes':
-      return 'Aqu-Lim-Poit-Ch';
-    case 'Auvergne-Rhône-Alpes':
-      return 'Auv-Rh-Alpes';
-    case 'Bourgogne-Franche-Comté':
-      return 'Bourgogne-FrC';
-    case 'Centre-Val de Loire':
-      return 'Centre-VdL';
-    case 'Charente-Maritime':
-      return 'Char.-Maritime';
-    case 'Languedoc-Roussillon-Midi-Pyrénées':
-      return 'Lang-Rous-Midi-P';
-    case 'Nord-Pas-de-Calais-Picardie':
-      return 'Hauts-de-France';
-    case 'Provence-Alpes-Côte d\'Azur':
-      return 'PACA'; 
-    case 'Languedoc-Roussillon':
-      return 'Lang.-Rouss.'; 
-    case 'Pyrénées-Orientales':
-      return 'Pyr.-Orient.';
-    case 'Hautes-Pyrénées':
-      return 'Hautes-Pyr.';
-    case 'Bouches-du-Rhône':
-      return 'B.-du-Rhône';
-    default:
-      return $name;
+      case 'Aquitaine-Limousin-Poitou-Charentes':
+        return 'Aqu-Lim-Poit-Ch';
+      case 'Auvergne-Rhône-Alpes':
+        return 'Auv-Rh-Alpes';
+      case 'Bourgogne-Franche-Comté':
+        return 'Bourgogne-FrC';
+      case 'Centre-Val de Loire':
+        return 'Centre-VdL';
+      case 'Charente-Maritime':
+        return 'Char.-Maritime';
+      case 'Languedoc-Roussillon-Midi-Pyrénées':
+        return 'Lang-Rous-Midi-P';
+      case 'Nord-Pas-de-Calais-Picardie':
+        return 'Hauts-de-France';
+      case 'Provence-Alpes-Côte d\'Azur':
+        return 'PACA'; 
+      case 'Languedoc-Roussillon':
+        return 'Lang.-Rouss.'; 
+      case 'Pyrénées-Orientales':
+        return 'Pyr.-Orient.';
+      case 'Hautes-Pyrénées':
+        return 'Hautes-Pyr.';
+      case 'Bouches-du-Rhône':
+        return 'B.-du-Rhône';
+      default:
+        return $name;
     }
   
 }
@@ -48,11 +48,11 @@ function _showClassementDep($depart)
     { 
       //if ($nb > 0)
       if (true)
-	{
-	  $name = $departements[$num];
-	  $name = mb_convert_encoding($name, 'UTF-8', 'ISO-8859-1');	
-	  echo "$name ($nb)<br/>";
-	}
+        {
+          $name = $departements[$num];
+          $name = mb_convert_encoding($name, 'UTF-8', 'ISO-8859-1');	
+          echo "$name ($nb)<br/>";
+        }
     }
 }
 
@@ -69,11 +69,11 @@ function _showClassementRegion($region)
     { 
       //if ($nb > 0)
       if (true)
-	{
-	  $name = $regions[$num];
-	  $name = mb_convert_encoding($name, 'UTF-8', 'ISO-8859-1');	
-	  echo "$name ($nb)<br/>";
-	}
+        {
+          $name = $regions[$num];
+          $name = mb_convert_encoding($name, 'UTF-8', 'ISO-8859-1');	
+          echo "$name ($nb)<br/>";
+        }
     }
 }
 
@@ -95,16 +95,16 @@ function _ShowColumnChart($chartname, $rnn, $type, $max)
       $rows[] = array($name, $value);
       $i++;
       if ($i == $max)
-	break;
+        break;
     }
 
   $chart = array(
-		 'id' => str_replace(' ', '_', $chartname.$type),
-		 'type' => 'ColumnChart',
-		 'fill' => '#ccc',
-		 'legend' => array($type),
-		 'rows' => $rows
-		 );
+    'id' => str_replace(' ', '_', $chartname.$type),
+    'type' => 'ColumnChart',
+    'fill' => '#ccc',
+    'legend' => array($type),
+    'rows' => $rows
+  );
 
   //echo "<pre>";
   //print_r($chart);
@@ -131,9 +131,9 @@ function _showClassement()
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
         ->entityCondition('bundle', 'reserve')
-	->fieldCondition('field_publie', 'value', 1, '=') 
-	->propertyOrderBy('title', 'asc')
-    	->addMetaData('account', user_load(1)); // run the query as user 1
+        ->fieldCondition('field_publie', 'value', 1, '=') 
+        ->propertyOrderBy('title', 'asc')
+        ->addMetaData('account', user_load(1)); // run the query as user 1
   $result = $query->execute();
   if (isset($result['node'])) 
     {
@@ -141,95 +141,97 @@ function _showClassement()
       $allrn = node_load_multiple($nids);
       foreach ($allrn as $rn)
         {  
-	  $rncode  = _getfieldvalue($rn, $rn->field_code, '');
-	  //$body    = _getfieldvalue($rn, $rn->body, '');
-	  $type    = _getfieldvalue($rn, $rn->field_typern, '');
-	  $regtab  = _getfieldvaluetab($rn, $rn->field_regionrn, array());
-	  $deptab  = _getfieldvaluetab($rn, $rn->field_departement, array());
-	  //$lati    = _getfieldvalue($rn, $rn->field_latitude, 0.0);
-	  //$long    = _getfieldvalue($rn, $rn->field_longitude, '0.0');
-	  $surface = _getfieldvalue($rn, $rn->field_surface, 0);
+          $rncode  = _getfieldvalue($rn, $rn->field_code, '');
+          //$body    = _getfieldvalue($rn, $rn->body, '');
+          $type    = _getfieldvalue($rn, $rn->field_typern, '');
+          $regtab  = _getfieldvaluetab($rn, $rn->field_regionrn, array());
+          $deptab  = _getfieldvaluetab($rn, $rn->field_departement, array());
+          //$lati    = _getfieldvalue($rn, $rn->field_latitude, 0.0);
+          //$long    = _getfieldvalue($rn, $rn->field_longitude, '0.0');
+          $surface = _getfieldvalue($rn, $rn->field_surface, 0);
 
-	  $surface = $surface / 100; // conversion en km2
+          $surface = $surface / 100; // conversion en km2
 
-	  //if ($rncode == 'RNN46')
-	  //echo $type."<br.";
-	  //print_r($regtab);
+          //if ($rncode == 'RNN46')
+          //echo $type."<br.";
+          //print_r($regtab);
 
-	  foreach($regtab as $reg)
-	    {
-	      $rgnid = $reg['nid'];
-	      $rgnode = node_load($rgnid);
-	      $rgcode = _getfieldvalue($rgnode, $rgnode->field_coderegion, '');
-	      $rgname = $regions[$rgcode];
-	      $rgname = mb_convert_encoding($rgname, 'UTF-8', 'ISO-8859-1');
-	      $rgname = Abbrev($rgname);
+          foreach($regtab as $reg)
+            {
+              $rgnid = $reg['nid'];
+              $rgnode = node_load($rgnid);
+              $rgcode = _getfieldvalue($rgnode, $rgnode->field_coderegion, '');
+              $rgname = $regions[$rgcode];
+              $rgname = mb_convert_encoding($rgname, 'UTF-8', 'ISO-8859-1');
+              $rgname = Abbrev($rgname);
 
-	      if (!isset($region_tab[$rgname]))
-		$region_tab[$rgname] = array(NB_RNN => 0, NB_RNR => 0, 
-					     SU_RNN => 0, SU_RNR => 0 );
+              if (!isset($region_tab[$rgname]))
+                $region_tab[$rgname] = array(NB_RNN => 0, NB_RNR => 0, 
+                                       SU_RNN => 0, SU_RNR => 0 );
 
-	      $rgtab = $region_tab[$rgname];
-	      if ($type == 'RNN')
-		{
-		  $rgtab[NB_RNN]++; 
-		  if ($rncode != 'RNN161' && $rgcode != '3') // TAAF et Guyane
-		  $rgtab[SU_RNN] += $surface;
-		}
-	      else
-		{
-		  $rgtab[NB_RNR]++;
-		  if ($rncode != 'RNC147') // bonifacio
-		    $rgtab[SU_RNR] += $surface;
-		}
-	      $region_tab[$rgname] = $rgtab;
-	    }
+              $rgtab = $region_tab[$rgname];
+              if ($type == 'RNN')
+                {
+                  $rgtab[NB_RNN]++;
+                  // on exclut les RN TAAF et la Guyane
+                  if ($rgcode != '98' && $rgcode != '3') // TAAF et Guyane
+                    $rgtab[SU_RNN] += $surface;
+                }
+              else
+                {
+                  $rgtab[NB_RNR]++;
+                  if ($rncode != 'RNC147') // bonifacio
+                    $rgtab[SU_RNR] += $surface;
+                }
+              $region_tab[$rgname] = $rgtab;
+            }
 	  
-	  foreach($deptab as $dep)
-	    {
-	      if ($dep['value'] != '')
-		{
-		  if ($type == 'RNR')
-		    {
-		  $depnum = $dep['value'];
-		  if (isset($depart_rn[$depnum]))
-		    $depart_rn[$depnum]++;
-		  else
-		    $depart_rn[$depnum] = 1;
-		    }
-		}
-	    }
+          foreach($deptab as $dep)
+            {
+              if ($dep['value'] != '')
+                {
+                  if ($type == 'RNR')
+                    {
+                      $depnum = $dep['value'];
+                      if (isset($depart_rn[$depnum]))
+                        $depart_rn[$depnum]++;
+                      else
+                        $depart_rn[$depnum] = 1;
+                    }
+                }
+            }
 
-	  foreach($deptab as $dep)
-	    {
-	      if ($dep['value'] != '')
-		{
-		  $depnum = $dep['value'];
-		  $depname = $departements[$depnum];
-		  $depname = mb_convert_encoding($depname, 'UTF-8', 'ISO-8859-1');	
-		  $depname = Abbrev($depname);
-		  if (!isset($depart_tab[$depname]))
-		    $depart_tab[$depname] = array(NB_RNN => 0, NB_RNR => 0,
-						  SU_RNN => 0, SU_RNR => 0 );
+          foreach($deptab as $dep)
+            {
+              if ($dep['value'] != '')
+                {
+                  $depnum = $dep['value'];
+                  $depname = $departements[$depnum];
+                  $depname = mb_convert_encoding($depname, 'UTF-8', 'ISO-8859-1');	
+                  $depname = Abbrev($depname);
+                  if (!isset($depart_tab[$depname]))
+                    $depart_tab[$depname] = array(NB_RNN => 0, NB_RNR => 0,
+                                            SU_RNN => 0, SU_RNR => 0 );
 
-		  $deptab = $depart_tab[$depname];
-		  if ($type == 'RNN')
-		    {
-		      $deptab[NB_RNN]++;
-		      if ($rncode != 'RNN161' && $depnum != '973') // TAAF et Guyane
-			$deptab[SU_RNN] += $surface;
+                  $deptab = $depart_tab[$depname];
+                  if ($type == 'RNN')
+                    {
+                      $deptab[NB_RNN]++;
+                      // on exclut les RN Taaf et la Guyane
+                      if ($rgcode != '98' && $depnum != '973') // TAAF et Guyane
+                        $deptab[SU_RNN] += $surface;
 
-		    }
-		  else
-		    {
-			$deptab[NB_RNR]++; 
-			if ($rncode != 'RNC147') // bonifacio
-			  $deptab[SU_RNR] += $surface;
-		    }
-		  $depart_tab[$depname] = $deptab;
-		}
-	    }
-	}
+                    }
+                  else
+                    {
+                      $deptab[NB_RNR]++; 
+                      if ($rncode != 'RNC147') // bonifacio
+                        $deptab[SU_RNR] += $surface;
+                    }
+                  $depart_tab[$depname] = $deptab;
+                }
+            }
+        }
     }
 
   //echo "<pre>";
