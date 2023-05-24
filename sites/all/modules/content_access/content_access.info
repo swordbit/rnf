@@ -6,8 +6,8 @@ package = Access control
 files[] = tests/content_access.test
 files[] = tests/content_access_acl.test
 
-; Information added by Drupal.org packaging script on 2022-06-01
-version = "7.x-1.2-beta4"
+; Information added by Drupal.org packaging script on 2023-04-28
+version = "7.x-1.2"
 core = "7.x"
 project = "content_access"
-datestamp = "1654071308"
+datestamp = "1682700779"
