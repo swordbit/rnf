@@ -329,6 +329,7 @@ function get_fiche_rn()
 
 	    $inpn = gfv($node, 'field_inpn', '');
 	    $wdpa = gfv($node, 'field_code_wdpa', '');
+        $wdata = gfv($node, 'field_code_wikidata', '');
 	    $fiche .= "<b>CODE</b><br/><i>$rncode</i>";
 
 	    $inpnurl = 'http://inpn.mnhn.fr/espace/protege/'.$inpn;
@@ -337,9 +338,11 @@ function get_fiche_rn()
 
 	    $wdpaurl = 'http://protectedplanet.net/'.$wdpa;
 	    if ($wdpa != '')
-	      $fiche .= "<br/><br/><b>Id WDPA / EUNIS</b><br/><a target=\"_blank\" href=\"$wdpaurl\">".$wdpa."</a>";
-      $eunisurl = 'https://eunis.eea.europa.eu/sites/'.$wdpa;
+	      $fiche .= "<br/><br/><b>WDPA / EUNIS / WDATA</b><br/><a target=\"_blank\" href=\"$wdpaurl\">".$wdpa."</a>";
+          $eunisurl = 'https://eunis.eea.europa.eu/sites/'.$wdpa;
 	      $fiche .= " / <a target=\"_blank\" href=\"$eunisurl\">".$wdpa."</a>";
+          $wikidataurl = 'https://www.wikidata.org/wiki/' . $wdata;
+          $fiche .= " / <a target=\"_blank\" href=\"$wikidataurl\">".$wdata."</a>";
 	    $fiche .= "<br/><br/>\n";
 
 	    $rnweb = gfv($node, 'field_website', '');
