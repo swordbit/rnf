@@ -10,64 +10,18 @@
  */
 
 /**
- * Implements hook_requirements().
- *
- * Remind the user to upgrade to Chain Menu Access API 2.x.
- */
-function forum_access_requirements($phase) {
-  require_once DRUPAL_ROOT . '/includes/install.inc';
-  $result = array();
-  switch ( $phase ) {
-    case 'update':
-    case 'runtime':
-      $t = get_t();
-      $path = drupal_get_filename('module', 'chain_menu_access');
-      $path = substr($path, 0, strlen($path) - 7) . '.info';
-      $info = drupal_parse_info_file($path);
-      $version = (isset($info['version']) ? $info['version'] : $t('Unknown'));
-      $found = preg_match('/7\.x-([0-9]*)\./', $version, $matches);
-      if (($found && $matches[1] == 1) || !$found) {
-        $cma = 'Chain Menu Access API';
-        $variables = array('@Chain_Menu_Access_API' => $cma, '@module' => url('admin/modules'));
-        $result[] = array(
-          'title'       => $t('@Chain_Menu_Access_API module', $variables),
-          'value'       => $version,
-          'description' => $t('Version 1.x is obsolete. Upgrade to version 2.x as soon as <em>all</em> installed client modules support that version.') . '<br />' .
-                           $t('Check the <a href="@module">module administration page</a> to find out which of your modules depend on @Chain_Menu_Access_API.', $variables),
-          'severity'    => REQUIREMENT_WARNING,
-        );
-      }
-  }
-  return $result;
-}
-
-/**
  * Implements hook_menu_alter().
  *
  * Remove the 'Forum' menu item if no forums are visible.
  */
 function forum_access_menu_alter(&$items) {
-  $requirements = forum_access_requirements('runtime');
-  if (!empty($requirements) && $requirements[0]['value'] != t('Unknown')) {
-    // Fall back to obsolete Chain Menu Access API version 7.x-1.x,
-    // because that's what's installed.
-    chain_menu_access_chain($items['forum'],                 'forum_access_view_any_forum', array());
-    chain_menu_access_chain($items['node/%node'],            '_forum_access_node_access_callback', array(1, 'view'));
-    chain_menu_access_chain($items['comment/%comment/edit'], '_forum_access_comment_edit_callback', array(1));
-    chain_menu_access_chain($items['comment/%comment/edit'], '_forum_access_comment_access_callback', array(1, 2), TRUE);
-    chain_menu_access_chain($items['comment/%/delete'],      '_forum_access_comment_access_callback', array(1, 2), TRUE);
-    chain_menu_access_chain($items['comment/%/approve'],     '_forum_access_comment_access_callback', array(1, 2), TRUE);
-    chain_menu_access_chain($items['comment/reply/%node'],   '_forum_access_comment_access_callback', array(2, 1));
-  }
-  else {
-    chain_menu_access_chain($items, 'forum',                 'forum_access_view_any_forum');
-    chain_menu_access_chain($items, 'node/%node',            '_forum_access_node_access_callback', array(1, 'view'));
-    chain_menu_access_chain($items, 'comment/%comment/edit', '_forum_access_comment_edit_callback', array(1));
-    chain_menu_access_chain($items, 'comment/%comment/edit', '_forum_access_comment_access_callback', array(1, 2), TRUE);
-    chain_menu_access_chain($items, 'comment/%/delete',      '_forum_access_comment_access_callback', array(1, 2), TRUE);
-    chain_menu_access_chain($items, 'comment/%/approve',     '_forum_access_comment_access_callback', array(1, 2), TRUE);
-    chain_menu_access_chain($items, 'comment/reply/%node',   '_forum_access_comment_access_callback', array(2, 1));
-  }
+  chain_menu_access_chain($items, 'forum',                 'forum_access_view_any_forum');
+  chain_menu_access_chain($items, 'node/%node',            '_forum_access_node_access_callback', array(1, 'view'));
+  chain_menu_access_chain($items, 'comment/%comment/edit', '_forum_access_comment_edit_callback', array(1));
+  chain_menu_access_chain($items, 'comment/%comment/edit', '_forum_access_comment_access_callback', array(1, 2), TRUE);
+  chain_menu_access_chain($items, 'comment/%/delete',      '_forum_access_comment_access_callback', array(1, 2), TRUE);
+  chain_menu_access_chain($items, 'comment/%/approve',     '_forum_access_comment_access_callback', array(1, 2), TRUE);
+  chain_menu_access_chain($items, 'comment/reply/%node',   '_forum_access_comment_access_callback', array(2, 1));
 }
 
 function _forum_access_node_access_callback($node, $op) {

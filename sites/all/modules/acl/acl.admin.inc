@@ -137,14 +137,17 @@ function acl_save_form($form, $priority = NULL) {
   db_delete('acl_user')
     ->condition('acl_id', $form['acl_id'])
     ->execute();
+
+  $insert = db_insert('acl_user')->fields(array('acl_id', 'uid'));
+
   foreach ($users as $uid => $name) {
-    db_insert('acl_user')
-    ->fields(array(
+    $insert->values(array(
       'acl_id' => $form['acl_id'],
       'uid' => $uid,
-    ))
-    ->execute();
+    ));
   }
+  $insert->execute();
+
   if (isset($priority)) {
     db_update('acl_node')
       ->fields(array(

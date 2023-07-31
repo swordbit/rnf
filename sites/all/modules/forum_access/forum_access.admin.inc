@@ -384,7 +384,7 @@ function _forum_access_forum_interference_form($is_container, $na_modules, $fa_p
       '!Content_Access' => $l('Content Access', 'http://drupal.org/project/content_access'),
       '@Content_Access' => 'Content Access',
       '!ACL'            => 'ACL',
-      '!module_list'    => '<ul><li>' . implode($na_modules, '</li><li>') . '</li></ul>',
+      '!module_list'    => '<ul><li>' . implode('</li><li>', $na_modules) . '</li></ul>',
     );
     $description = t('Forums can contain other content types besides %content_type; !Forum_Access will contribute the grants defined above to every node in this forum, but other node access control modules may also contribute their grants, especially to nodes of types other than %content_type.', $variables);
     $form[] = array(
