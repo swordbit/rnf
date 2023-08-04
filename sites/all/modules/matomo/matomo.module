@@ -50,6 +50,7 @@ function matomo_permission() {
     'administer matomo' => array(
       'title' => t('Administer Matomo'),
       'description' => t('Perform maintenance tasks for Matomo.'),
+      'restrict access' => TRUE,
     ),
     'opt-in or out of matomo tracking' => array(
       'title' => t('Opt-in or out of tracking'),
