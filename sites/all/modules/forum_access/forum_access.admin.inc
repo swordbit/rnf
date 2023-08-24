@@ -358,7 +358,7 @@ function _forum_access_forum_form_after_build_acl0($element, &$form_state) {
 }
 
 function _forum_access_forum_form_after_build_acl2($element, &$form_state) {
-  if (!count(unserialize($element['user_list']['#default_value'])) && !count(unserialize($element['user_list']['#value']))) {
+  if (!count(acl_edit_form_get_user_list($element, TRUE)) && !count(acl_edit_form_get_user_list($element))) {
     $element['#collapsed'] = TRUE;
     $element['#attributes']['class'][] = 'collapsed'; // We're already 'after build' and have to do this ourselves!
   }
@@ -594,7 +594,6 @@ function _forum_access_form_submit($form, &$form_state) {
 
   $fa_priority = isset($fa_values['interference']['advanced']['priority']) ? $fa_values['interference']['advanced']['priority'] : 0;
   if (array_key_exists('acl', $fa_values)) {
-    $moderators = unserialize($fa_values['acl']['user_list']);
     acl_save_form($fa_values['acl'], $fa_priority);
   }
   $insert = db_insert('forum_access');

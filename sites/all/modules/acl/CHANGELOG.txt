@@ -5,9 +5,12 @@ CHANGELOG for ACL for Drupal 7
 acl 7.x-1.x-dev:
 
 
+acl 7.x-1.4 (2023-08-23):
+    - Issue by salvis: Update serialization.
+
+
 acl 7.x-1.3 (2023-07-27):
     - #2650302 by Elin Yordanov: acl_save_form() insert query optimization.
-
 
 acl 7.x-1.2 (2019-09-14):
   Enhancement:

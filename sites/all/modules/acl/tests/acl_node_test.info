@@ -8,8 +8,8 @@ hidden = TRUE
 
 files[] = acl_node_test.module
 
-; Information added by Drupal.org packaging script on 2023-07-27
-version = "7.x-1.3"
+; Information added by Drupal.org packaging script on 2023-08-23
+version = "7.x-1.4"
 core = "7.x"
 project = "acl"
-datestamp = "1690496935"
+datestamp = "1692788098"

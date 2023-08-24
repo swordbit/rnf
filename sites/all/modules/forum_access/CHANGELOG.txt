@@ -5,13 +5,16 @@ CHANGELOG for Forum Access for Drupal 7
 forum_access 7.x-1.x-dev:
 
 
+forum_access 7.x-1.6 (2023-08-23):
+  - Issue by salvis: Update serialization.
+
+
 forum_access 7.x-1.5 (2023-07-28):
   Enhancements:
     - Issue by salvis: Require acl 7.x-1.3.
     - #3375942 by salvis: Require chain_menu_access 7.x-2.1.
   Bugs fixed:
     - #3317447 by immaculatexavier: Deprecated implode() function call.
-
 
 forum_access 7.x-1.4 (2019-09-25):
   Enhancements:
