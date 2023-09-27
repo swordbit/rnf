@@ -211,8 +211,9 @@ function _displayChiffrescles()
 	<strong>Les plus grandes :</strong><br/>
 	<ul style="margin: 0;">
 	<li>La <a href="../terres-australes-francaises">r&eacute;serve naturelle des Terres australes fran&ccedil;aises</a> qui couvre 67,2 millions d'hectares&nbsp;;</li>
+  <li>La <a href="../archipel-des-glorieuses">r&eacute;serve naturelle de l'archipel des Glorieuses</a> dans l'oc&eacute;an Indien&nbsp;(4&nbsp;379&nbsp;000&nbsp;ha)&nbsp;;</li>
 	<li>La <a href="../nouragues">r&eacute;serve naturelle des Nouragues</a> en Guyane qui prot&egrave;ge 100&nbsp;000&nbsp;ha de for&ecirc;t tropicale&nbsp;;</li>
-	<li>Les plus grandes en M&eacute;tropole : les <a href="../bouches-de-bonifacio">Bouches de Bonifacio</a> (79&nbsp;460&nbsp;ha), les <a href="../hauts-plateaux-du-vercors">hauts plateaux du Vercors</a> (17&nbsp;000 ha), la <a href="../camargue">Camargue</a> (13&nbsp;000 ha) et la <a href="../haute-chaine-du-jura">haute cha&icirc;ne du Jura</a> (10&nbsp;900 ha).</li></ul>
+	<li>Les plus grandes en M&eacute;tropole : les <a href="../bouches-de-bonifacio">Bouches de Bonifacio</a> (79&nbsp;460&nbsp;ha), les <a href="../sept-iles">Sept-&Icirc;les</a> (19&nbsp;700&nbsp;ha), les <a href="../hauts-plateaux-du-vercors">hauts plateaux du Vercors</a> (17&nbsp;000 ha), la <a href="../camargue">Camargue</a> (13&nbsp;000 ha) et la <a href="../haute-chaine-du-jura">haute cha&icirc;ne du Jura</a> (10&nbsp;900 ha).</li></ul>
 	<strong>Les plus petites :</strong><br/>
 	<ul style="margin: 0;">
 	<li>La <a href="../mine-du-verdy">r&eacute;serve naturelle de la mine du Verdy</a> (0,05&nbsp;ha)&nbsp;;</li>
