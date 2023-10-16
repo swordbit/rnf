@@ -229,7 +229,7 @@ function _spamspan_callback_mailto($matches) {
   // Replace it back to a single quote which is perfectly valid
   $matches[3] = str_replace("&#039;", '\'', $matches[3]);
   $query = parse_url($matches[3], PHP_URL_QUERY);
-  $query = str_replace('&amp;', '&', $query);
+  $query = isset($query) ? str_replace('&amp;', '&', $query) : '';
   $headers = preg_split('/[&;]/', $query);
   // if no matches, $headers[0] will be set to '' so $headers must be reset
   if ($headers[0] == '') {
