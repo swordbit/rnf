@@ -4,8 +4,8 @@ core = 7.x
 dependencies[] = drupal:update
 configure = admin/reports/updates/upgrade
 
-; Information added by Drupal.org packaging script on 2023-01-18
-version = "7.x-2.0-alpha3"
+; Information added by Drupal.org packaging script on 2023-12-18
+version = "7.x-2.0"
 core = "7.x"
 project = "upgrade_status"
-datestamp = "1674058648"
+datestamp = "1702908180"
